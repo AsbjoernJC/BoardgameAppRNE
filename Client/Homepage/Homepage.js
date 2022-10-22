@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, createTheme, ThemeProvider } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
+import { StyleSheet, View, ScrollView } from "react-native";
+
 // https://stackoverflow.com/questions/49996456/importing-json-file-in-typescript
 const theme = createTheme({});
 
