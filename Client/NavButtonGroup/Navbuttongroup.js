@@ -5,11 +5,12 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { render } from "react-dom";
 
 class NavButtonGroup extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {
+    console.log("hi");
     return (
       <View>
         <ButtonGroup
