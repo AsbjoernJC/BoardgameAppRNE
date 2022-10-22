@@ -1,7 +1,13 @@
 import React from "react";
 import { Button, createTheme, ButtonGroup, Card, Text } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
-import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
@@ -36,12 +42,32 @@ class Homepage extends React.Component {
 
   render() {
     console.log("hello");
+    const DATA = [
+      {
+        id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+        title: "First Item",
+      },
+      {
+        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+        title: "Second Item",
+      },
+      {
+        id: "58694a0f-3da1-471f-bd96-145571e29d72",
+        title: "Third Item",
+      },
+    ];
+    const Item = ({ title }) => (
+      <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    );
+    const renderItem = ({ item }) => <Item title={item.title} />;
     return (
       <>
-        {" "}
+        {/* https://reactnative.dev/docs/flexbox */}
         <View //Dette er samlingen af knapper
           style={[
-            styles.containerContainer,
+            styles.container,
             {
               // Try setting `flexDirection` to `"row"`.
               flexDirection: "row",
@@ -95,6 +121,15 @@ class Homepage extends React.Component {
             />
           </View>
         </View>
+        <SafeAreaView style={styles.containeren}>
+          <FlatList
+            backgroundColor={"CAC4CE"}
+            numColumns={2}
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(Item) => Item.id}
+          />
+        </SafeAreaView>
       </>
     );
   }
@@ -108,6 +143,19 @@ const styles = StyleSheet.create({
   },
   containerContainer: {
     flex: 1,
+  },
+  containeren: {
+    flex: 1,
+    backgroundColor: "#CAC4CE",
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
   },
 });
 
