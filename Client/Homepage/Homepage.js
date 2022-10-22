@@ -1,6 +1,8 @@
 import React from "react";
-import { Button, createTheme, ButtonGroup, Card, Text } from "@rneui/themed";
+
+import { Button, createTheme, ButtonGroup, Text } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
+
 import {
   StyleSheet,
   View,
@@ -8,6 +10,7 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
+
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
@@ -64,12 +67,12 @@ class Homepage extends React.Component {
     const renderItem = ({ item }) => <Item title={item.title} />;
     return (
       <>
+
         {/* https://reactnative.dev/docs/flexbox */}
         <View //Dette er samlingen af knapper
           style={[
             styles.container,
             {
-              // Try setting `flexDirection` to `"row"`.
               flexDirection: "row",
             },
           ]}
