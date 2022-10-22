@@ -10,6 +10,7 @@ class NavButtonGroup extends React.Component {
   }
 
   render() {
+    console.log("hi");
     return (
       <View>
         <ButtonGroup

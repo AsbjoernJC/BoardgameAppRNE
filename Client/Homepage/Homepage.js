@@ -1,7 +1,9 @@
 import React from "react";
+
 import { Button, createTheme, ButtonGroup, Text } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { StyleSheet, View, ScrollView, FlatList, Image } from "react-native";
+
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
