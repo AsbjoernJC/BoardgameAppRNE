@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, createTheme, ButtonGroup, Card, Text } from "@rneui/themed";
+
+import { Button, createTheme, ButtonGroup, Text } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
-import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import { StyleSheet, View, ScrollView, FlatList, Image } from "react-native";
+
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
@@ -38,12 +40,10 @@ class Homepage extends React.Component {
     console.log("hello");
     return (
       <>
-        {" "}
         <View //Dette er samlingen af knapper
           style={[
-            styles.containerContainer,
+            styles.container,
             {
-              // Try setting `flexDirection` to `"row"`.
               flexDirection: "row",
             },
           ]}
