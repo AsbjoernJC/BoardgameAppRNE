@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, createTheme, ButtonGroup } from "@rneui/themed";
+import { Button, createTheme, ButtonGroup, Text } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, FlatList, Image } from "react-native";
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
@@ -37,10 +37,63 @@ class Homepage extends React.Component {
   render() {
     console.log("hello");
     return (
-      <ScrollView style={styles.container}>
-        <NavButtonGroup />
-        <BoardgameCard />
-      </ScrollView>
+      <>
+        <View //Dette er samlingen af knapper
+          style={[
+            styles.container,
+            {
+              flexDirection: "row",
+            },
+          ]}
+        >
+          <View style={{ flex: 1, margin: 5 }}>
+            <Button
+              color="#D17B0F"
+              buttonStyle={{
+                borderRadius: 8,
+                fontSize: 17,
+              }}
+              onPress={() => this.props.navigation.navigate("Ranking")}
+              title="Boardgames"
+              titleStyle={{
+                fontWeight: "700",
+                fontSize: 17,
+                color: "#F7ECE1",
+              }}
+            />
+          </View>
+          <View style={{ flex: 1, margin: 5 }}>
+            <Button
+              color="#242038"
+              buttonStyle={{
+                borderRadius: 8,
+              }}
+              onPress={() => this.props.navigation.navigate("Ranking")}
+              title="Playgroups"
+              titleStyle={{
+                fontWeight: "700",
+                fontSize: 17,
+                color: "#F7ECE1",
+              }}
+            />
+          </View>
+          <View style={{ flex: 1, margin: 5 }}>
+            <Button
+              color="#242038"
+              buttonStyle={{
+                borderRadius: 8,
+              }}
+              onPress={() => this.props.navigation.navigate("Ranking")}
+              title="Ranking"
+              titleStyle={{
+                fontWeight: "700",
+                fontSize: 17,
+                color: "#F7ECE1",
+              }}
+            />
+          </View>
+        </View>
+      </>
     );
   }
 }
@@ -48,9 +101,11 @@ class Homepage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 0,
     paddingTop: 50,
     backgroundColor: "#CAC4CE",
+  },
+  containerContainer: {
+    flex: 1,
   },
 });
 
