@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, createTheme, ThemeProvider } from "@rneui/themed";
+import { Button, createTheme, ButtonGroup } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { StyleSheet, View, ScrollView } from "react-native";
+import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
+import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
 // https://stackoverflow.com/questions/49996456/importing-json-file-in-typescript
 const theme = createTheme({});
@@ -32,19 +34,24 @@ class Homepage extends React.Component {
     this.AssignBoardgames();
   }
 
-  // https://reactnative.dev/docs/navigation
   render() {
+    console.log("hello");
     return (
-      <>
-        <ThemeProvider theme={theme}>
-          <Button
-            onPress={() => this.props.navigation.navigate("Ranking")}
-            title="Go to Ranking"
-          />
-        </ThemeProvider>
-      </>
+      <ScrollView style={styles.container}>
+        <NavButtonGroup />
+        <BoardgameCard />
+      </ScrollView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 0,
+    paddingTop: 50,
+    backgroundColor: "#CAC4CE",
+  },
+});
 
 export default Homepage;

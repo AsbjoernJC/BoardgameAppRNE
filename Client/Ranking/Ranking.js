@@ -92,10 +92,6 @@ class Ranking extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1,
-    // paddingTop: StatusBar.currentHeight,
-  },
   container: {
     flex: 1,
     padding: 8,
