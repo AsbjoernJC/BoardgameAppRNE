@@ -28,7 +28,6 @@ class Homepage extends React.Component {
 
   componentDidMount() {
     this.AssignBoardgames();
-    // console.log(BOARDGAMES[0]);
   }
 
   // https://reactnative.dev/docs/navigation
