@@ -9,15 +9,14 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
-// https://stackoverflow.com/questions/49996456/importing-json-file-in-typescript
 const theme = createTheme({});
 
-// <any, any> https://stackoverflow.com/questions/47561848/property-value-does-not-exist-on-type-readonly
 class Homepage extends React.Component {
   constructor() {
     super();
@@ -64,10 +63,9 @@ class Homepage extends React.Component {
         <Text style={styles.title}>{title}</Text>
       </View>
     );
-    const renderItem = ({ item }) => <Item title={item.title} />;
+    const renderItem = ({ item }) => <Item title={item.title} style={styles.item} />;
     return (
       <>
-
         {/* https://reactnative.dev/docs/flexbox */}
         <View //Dette er samlingen af knapper
           style={[
@@ -127,6 +125,7 @@ class Homepage extends React.Component {
         <SafeAreaView style={styles.containeren}>
           <FlatList
             backgroundColor={"CAC4CE"}
+            style={{ width: "100%" }}
             numColumns={2}
             data={DATA}
             renderItem={renderItem}
