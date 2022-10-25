@@ -25,6 +25,8 @@ class BoardgameCard extends React.Component {
             borderRadius: 20,
             margin: 5,
             backgroundColor: "#242038",
+            paddingBottom: "2%",
+            paddingTop: "3%",
           }}
         >
           <Card.Title
@@ -32,6 +34,7 @@ class BoardgameCard extends React.Component {
               fontWeight: "700",
               fontSize: 17,
               color: "#F7ECE1",
+              textAlignVertical: "top",
             }}
           >
             6-Nimmt
@@ -47,7 +50,6 @@ class BoardgameCard extends React.Component {
               width: 26,
               height: 26,
               margin: 5,
-              alignContent: "center",
               alignSelf: "center",
               justifyContent: "center",
             }}
@@ -60,7 +62,7 @@ class BoardgameCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  boardgameCardView: {},
+  boardgameCardView: { justifyContent: "center" },
 });
 
 export default BoardgameCard;
