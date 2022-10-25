@@ -19,7 +19,7 @@ class BoardgameCard extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.boardgameCardView}>
         <Card
           containerStyle={{
             borderRadius: 20,
@@ -28,7 +28,11 @@ class BoardgameCard extends React.Component {
           }}
         >
           <Card.Title
-            style={{ fontWeight: "700", fontSize: 17, color: "#F7ECE1" }}
+            style={{
+              fontWeight: "700",
+              fontSize: 17,
+              color: "#F7ECE1",
+            }}
           >
             6-Nimmt
           </Card.Title>
@@ -37,6 +41,18 @@ class BoardgameCard extends React.Component {
             style={{ aspectRatio: 1 }}
             source={require("../../assets/BoardgameAssets/6-nimmt.jpg")}
           />
+          <Image
+            style={{
+              aspectRatio: 1,
+              width: 26,
+              height: 26,
+              margin: 5,
+              alignContent: "center",
+              alignSelf: "center",
+              justifyContent: "center",
+            }}
+            source={require("../../assets/FontAwesomeIcons/CircleRightarrow.png")}
+          />
         </Card>
       </View>
     );
@@ -44,10 +60,7 @@ class BoardgameCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 5,
-  },
+  boardgameCardView: {},
 });
 
 export default BoardgameCard;

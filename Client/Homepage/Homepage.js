@@ -73,7 +73,8 @@ class Homepage extends React.Component {
     }
     return (
       <View style={styles.boardgameCard}>
-        <Text style={styles.itemText}>{item.key}</Text>
+        <BoardgameCard style={styles.boardgameCard} />
+        {/* <Text style={styles.itemText}>{item.key}</Text> */}
       </View>
     );
   };
@@ -141,6 +142,7 @@ class Homepage extends React.Component {
             />
           </View>
         </View>
+        {/* <BoardgameCard></BoardgameCard> */}
         <View style={{ backgroundColor: "#CAC4CE" }}>
           <FlatList
             data={this.formatData(data, numColumns)}
@@ -168,11 +170,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#CAC4CE",
   },
   boardgameCard: {
-    backgroundColor: "#4D243D",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    margin: 1,
+    margin: "10%",
     height: Dimensions.get("window").width / numColumns, // approximate a square
   },
   itemInvisible: {
