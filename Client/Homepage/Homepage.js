@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, createTheme, ButtonGroup, Text } from "@rneui/themed";
+import { Button, createTheme, ButtonGroup, Text, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 
 import {
@@ -10,6 +10,7 @@ import {
   FlatList,
   SafeAreaView,
   Dimensions,
+  TextInput,
 } from "react-native";
 
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
@@ -85,6 +86,7 @@ class Homepage extends React.Component {
     return (
       <>
         {/* https://reactnative.dev/docs/flexbox */}
+        <View></View>
         <View //Dette er samlingen af knapper
           style={[
             styles.buttonGroup,
@@ -115,7 +117,7 @@ class Homepage extends React.Component {
               buttonStyle={{
                 borderRadius: 8,
               }}
-              onPress={() => this.props.navigation.navigate("Ranking")}
+              onPress={() => this.props.navigation.navigate("Playgroups")}
               title="Playgroups"
               titleStyle={{
                 fontWeight: "700",
