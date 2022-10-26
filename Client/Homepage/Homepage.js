@@ -41,7 +41,6 @@ class Homepage extends React.Component {
   }
 
   AssignBoardgames() {
-    // i stedet for at læse fil så brug https://youtu.be/NHi455y3V2k
     this.setState(
       {
         boardgames: BOARDGAMES,
@@ -74,7 +73,6 @@ class Homepage extends React.Component {
     return (
       <View style={styles.boardgameCard}>
         <BoardgameCard style={styles.boardgameCard} />
-        {/* <Text style={styles.itemText}>{item.key}</Text> */}
       </View>
     );
   };
@@ -142,7 +140,6 @@ class Homepage extends React.Component {
             />
           </View>
         </View>
-        {/* <BoardgameCard></BoardgameCard> */}
         <View style={{ backgroundColor: "#CAC4CE" }}>
           <FlatList
             data={this.formatData(data, numColumns)}
