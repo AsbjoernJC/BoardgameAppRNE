@@ -102,7 +102,7 @@ class Homepage extends React.Component {
                 borderRadius: 8,
                 fontSize: 17,
               }}
-              onPress={() => this.props.navigation.navigate("Ranking")}
+              onPress={() => this.props.navigation.navigate("Homepage")}
               title="Boardgames"
               titleStyle={{
                 fontWeight: "700",
