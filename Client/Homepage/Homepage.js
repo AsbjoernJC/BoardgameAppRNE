@@ -41,7 +41,7 @@ class Homepage extends React.Component {
     console.log(this.props);
   }
 
-  AssignBoardgames() {
+  assignBoardgames() {
     this.setState(
       {
         boardgames: BOARDGAMES,
@@ -50,6 +50,10 @@ class Homepage extends React.Component {
         console.log(this.state.boardgames);
       }
     );
+  }
+
+  searchBoardgames(input) {
+    console.log(input);
   }
 
   formatData = (data, numColumns) => {
@@ -79,7 +83,7 @@ class Homepage extends React.Component {
   };
 
   componentDidMount() {
-    this.AssignBoardgames();
+    this.assignBoardgames();
   }
 
   render() {
@@ -157,6 +161,7 @@ class Homepage extends React.Component {
           }}
         >
           <Input
+            onChangeText={(input) => this.searchBoardgames(input)}
             containerStyle={{
               justifyContent: "center",
               alignContent: "center",
