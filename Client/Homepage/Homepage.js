@@ -84,73 +84,105 @@ class Homepage extends React.Component {
 
   render() {
     return (
-      <>
-        {/* https://reactnative.dev/docs/flexbox */}
-        <View></View>
-        <View //Dette er samlingen af knapper
-          style={[
-            styles.buttonGroup,
-            {
-              flexDirection: "row",
-            },
-          ]}
-        >
-          <View style={{ flex: 1, margin: 5 }}>
-            <Button
-              color="#D17B0F"
-              buttonStyle={{
-                borderRadius: 8,
-                fontSize: 17,
-              }}
-              onPress={() => this.props.navigation.navigate("Homepage")}
-              title="Boardgames"
-              titleStyle={{
-                fontWeight: "700",
-                fontSize: 17,
-                color: "#F7ECE1",
-              }}
-            />
-          </View>
-          <View style={{ flex: 1, margin: 5 }}>
-            <Button
-              color="#242038"
-              buttonStyle={{
-                borderRadius: 8,
-              }}
-              onPress={() => this.props.navigation.navigate("Playgroups")}
-              title="Playgroups"
-              titleStyle={{
-                fontWeight: "700",
-                fontSize: 17,
-                color: "#F7ECE1",
-              }}
-            />
-          </View>
-          <View style={{ flex: 1, margin: 5 }}>
-            <Button
-              color="#242038"
-              buttonStyle={{
-                borderRadius: 8,
-              }}
-              onPress={() => this.props.navigation.navigate("Ranking")}
-              title="Ranking"
-              titleStyle={{
-                fontWeight: "700",
-                fontSize: 17,
-                color: "#F7ECE1",
-              }}
-            />
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
+        <View style={{ flex: 0.15, backgroundColor: "#CAC4CE" }}>
+          <View //Dette er samlingen af knapper
+            style={[
+              styles.buttonGroup,
+              {
+                flexDirection: "row",
+                minHeight: "20%",
+              },
+            ]}
+          >
+            <View style={{ flex: 1, margin: 5 }}>
+              <Button
+                color="#D17B0F"
+                buttonStyle={{
+                  borderRadius: 8,
+                  fontSize: 17,
+                }}
+                onPress={() => this.props.navigation.navigate("Homepage")}
+                title="Boardgames"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  color: "#F7ECE1",
+                }}
+              />
+            </View>
+            <View //Dette er samlingen af navbuttons
+              style={{ flex: 1, margin: 5 }}
+            >
+              <Button
+                color="#242038"
+                buttonStyle={{
+                  borderRadius: 8,
+                }}
+                onPress={() => this.props.navigation.navigate("Playgroups")}
+                title="Playgroups"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  color: "#F7ECE1",
+                }}
+              />
+            </View>
+            <View style={{ flex: 1, margin: 5 }}>
+              <Button
+                color="#242038"
+                buttonStyle={{
+                  borderRadius: 8,
+                }}
+                onPress={() => this.props.navigation.navigate("Ranking")}
+                title="Ranking"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  color: "#F7ECE1",
+                }}
+              />
+            </View>
           </View>
         </View>
-        <View style={{ backgroundColor: "#CAC4CE" }}>
-          <FlatList
-            data={this.formatData(data, numColumns)}
-            style={styles.container}
-            renderItem={this.renderItem}
-            numColumns={numColumns}
+        <View // Dette er samlingen af search baren Forsøg at fixe den således,
+          //når man vil inputte tekst maybe:https://www.google.com/search?q=react+native+text+input+shrinks+when+typing&oq=react+native+text+input+shrinks+when+typing&aqs=chrome..69i57j69i64l3.12396j0j7&sourceid=chrome&ie=UTF-8
+          style={{
+            flex: 0.08,
+            backgroundColor: "#d9d9d9",
+            borderRadius: 8,
+            alignSelf: "center",
+            width: "80%",
+            marginTop: 15,
+          }}
+        >
+          <Input
+            containerStyle={{
+              justifyContent: "center",
+              alignContent: "center",
+              marginTop: 5,
+            }}
+            inputStyle={{ alignSelf: "center" }}
+            placeholder="Search after a boardgame"
+            leftIcon={{
+              marginRight: 20,
+              type: "font-awesome",
+              name: "search",
+              color: "#242038",
+            }}
           />
         </View>
-      </>
+        <View style={{ flex: 1 }}>
+          <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
+            <FlatList
+              data={this.formatData(data, numColumns)}
+              style={styles.container}
+              renderItem={this.renderItem}
+              numColumns={numColumns}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
     );
   }
 }
@@ -158,14 +190,14 @@ class Homepage extends React.Component {
 const styles = StyleSheet.create({
   buttonGroup: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 10,
     height: 50,
+    minHeight: 50,
     backgroundColor: "#CAC4CE",
   },
   container: {
     flex: 1,
-    marginVertical: 20,
-    paddingBottom: 530,
+    marginVertical: 8,
     backgroundColor: "#CAC4CE",
   },
   boardgameCard: {

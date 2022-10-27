@@ -67,7 +67,7 @@ class Playgroups extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
-        <View style={{ flex: 0.2, backgroundColor: "#CAC4CE" }}>
+        <View style={{ flex: 0.15, backgroundColor: "#CAC4CE" }}>
           <View //Dette er samlingen af knapper
             style={[
               styles.buttonGroup,
@@ -127,9 +127,9 @@ class Playgroups extends React.Component {
           </View>
         </View>
         <View // Dette er samlingen af search baren Forsøg at fixe den således,
-          //når man vil inputte tekst maybe:https://stackoverflow.com/questions/70681219/textinput-breaks-view-layout-in-react-native-how-to-fix-it
+          //når man vil inputte tekst maybe:https://www.google.com/search?q=react+native+text+input+shrinks+when+typing&oq=react+native+text+input+shrinks+when+typing&aqs=chrome..69i57j69i64l3.12396j0j7&sourceid=chrome&ie=UTF-8
           style={{
-            flex: 0.07,
+            flex: 0.08,
             backgroundColor: "#d9d9d9",
             borderRadius: 8,
             alignSelf: "center",
@@ -153,7 +153,7 @@ class Playgroups extends React.Component {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <View style={{ backgroundColor: "#CAC4CE" }}>
+          <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
             <FlatList
               data={this.formatData(data, numColumns)}
               style={styles.container}
@@ -170,7 +170,7 @@ class Playgroups extends React.Component {
 const styles = StyleSheet.create({
   buttonGroup: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 10,
     height: 50,
     minHeight: 50,
     backgroundColor: "#CAC4CE",
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginVertical: 20,
-    paddingBottom: 530,
     backgroundColor: "#CAC4CE",
   },
   boardgameCard: {
