@@ -13,11 +13,21 @@ import { render } from "react-dom";
 import { FlatList } from "react-native-gesture-handler";
 
 class BoardgameCard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      image: null,
+    };
+  }
+
+  initSource() {
+    // require();
   }
 
   render() {
+    console.log(this.props.name);
+    console.log(this.props.source);
     return (
       <View style={styles.boardgameCardView}>
         <Card
@@ -35,15 +45,15 @@ class BoardgameCard extends React.Component {
               fontSize: 17,
               color: "#F7ECE1",
               textAlignVertical: "top",
+              maxHeight: 20,
             }}
           >
-            6-Nimmt
+            {this.props.name.length < 17
+              ? this.props.name
+              : this.props.name.substring(0, 17)}
           </Card.Title>
 
-          <Card.Image
-            style={{ aspectRatio: 1 }}
-            source={require("../../assets/BoardgameAssets/6-nimmt.jpg")}
-          />
+          <Card.Image style={{ aspectRatio: 1 }} source={this.props.source} />
           <Image
             style={{
               aspectRatio: 1,

@@ -16,20 +16,6 @@ import {
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
-const data = [
-  { key: "A" },
-  { key: "B" },
-  { key: "C" },
-  { key: "D" },
-  { key: "E" },
-  { key: "F" },
-  { key: "G" },
-  { key: "H" },
-  { key: "I" },
-  { key: "J" },
-  // { key: 'K' },
-  // { key: 'L' },
-];
 const numColumns = 2;
 
 class Homepage extends React.Component {
@@ -77,7 +63,11 @@ class Homepage extends React.Component {
     }
     return (
       <View style={styles.boardgameCard}>
-        <BoardgameCard style={styles.boardgameCard} />
+        <BoardgameCard
+          name={item}
+          style={styles.boardgameCard}
+          source={require("../../assets/BoardgameAssets/6-nimmt.jpg")}
+        />
       </View>
     );
   };
@@ -87,6 +77,7 @@ class Homepage extends React.Component {
   }
 
   render() {
+    console.log("Homepage.js");
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
         <View style={{ flex: 0.15, backgroundColor: "#CAC4CE" }}>
@@ -180,7 +171,7 @@ class Homepage extends React.Component {
         <View style={{ flex: 1 }}>
           <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
             <FlatList
-              data={this.formatData(data, numColumns)}
+              data={this.formatData(this.state.boardgames, numColumns)}
               style={styles.container}
               renderItem={this.renderItem}
               numColumns={numColumns}
