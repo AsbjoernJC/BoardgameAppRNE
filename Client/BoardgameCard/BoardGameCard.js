@@ -26,8 +26,6 @@ class BoardgameCard extends React.Component {
   }
 
   render() {
-    console.log(this.props.name);
-    console.log(this.props.source);
     return (
       <View style={styles.boardgameCardView}>
         <Card
@@ -46,6 +44,7 @@ class BoardgameCard extends React.Component {
               color: "#F7ECE1",
               textAlignVertical: "top",
               maxHeight: 20,
+              textTransform: "capitalize",
             }}
           >
             {this.props.name.length < 17

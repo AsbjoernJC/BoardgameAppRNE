@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button, createTheme, ButtonGroup, Text, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
+import { IMAGES } from "../StaticImages/images";
 
 import {
   StyleSheet,
@@ -24,18 +25,10 @@ class Homepage extends React.Component {
     this.state = {
       boardgames: [],
     };
-    console.log(this.props);
   }
 
   assignBoardgames() {
-    this.setState(
-      {
-        boardgames: BOARDGAMES,
-      },
-      () => {
-        console.log(this.state.boardgames);
-      }
-    );
+    this.setState({ boardgames: BOARDGAMES });
   }
 
   searchBoardgames(input) {
@@ -66,7 +59,7 @@ class Homepage extends React.Component {
         <BoardgameCard
           name={item}
           style={styles.boardgameCard}
-          source={require("../../assets/BoardgameAssets/6-nimmt.jpg")}
+          source={IMAGES[item]}
         />
       </View>
     );

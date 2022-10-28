@@ -9,20 +9,16 @@ with open('C:\PersonligeProjekter\ReactNativeWElements\Client\StaticImages\\boar
     boardgames = boardgames['boardgames']
     js_file = open(
         "C:\PersonligeProjekter\ReactNativeWElements\Client\StaticImages\\images.js", "w")
-    js_file.write("export const IMAGES = {")
+    js_file.write("export const IMAGES = {\n")
     i = 0
     for boardgame in boardgames:
-        if (i == 12):
-            requireBoardgame = '"' + boardgame + '"' + ":" + \
-                "require(\"../../assets/BoardgameAssets/" + \
-                boardgame + ".jpg\")" + ","
-            print(requireBoardgame)
-
         requireBoardgame = '"' + boardgame + '"' + ":" + \
             "require(\"../../assets/BoardgameAssets/" + \
-            boardgame + ".jpg\")" + ","
+            boardgame + ".jpg\")" + ",\n"
         js_file.write(requireBoardgame)
         i += 1
 
     js_file.write("}")
+    js_file.close()
+
     print(boardgame)
