@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ranking from "./Ranking/Ranking";
 import Homepage from "./Homepage/Homepage";
 import Playgroups from "./Playgroups/Playgroups";
+import AddPlaygroup from "./Playgroups/AddPlaygroup";
 const Stack = createNativeStackNavigator();
 
 class App extends React.Component {
@@ -21,7 +22,10 @@ class App extends React.Component {
             <Stack.Screen key={2} name="Playgroups">
               {(props) => <Playgroups {...props} />}
             </Stack.Screen>
-            <Stack.Screen key={3} name="Ranking">
+            <Stack.Screen key={3} name="Addplaygroup">
+              {(props) => <AddPlaygroup {...props} />}
+            </Stack.Screen>
+            <Stack.Screen key={4} name="Ranking">
               {(props) => <Ranking {...props} />}
             </Stack.Screen>
           </Stack.Navigator>

@@ -11,17 +11,14 @@ import {
 
 const numColumns = 2;
 
-class Playgroups extends React.Component {
+class AddPlaygroup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inited: false,
-      navigation: [],
-    };
+    this.state = {};
   }
 
-  doMoreStuff() {
-    this.props.navigation.navigate("Addplaygroup");
+  doStuff() {
+    console.log("DIDSTUFF");
   }
 
   render() {
@@ -29,10 +26,7 @@ class Playgroups extends React.Component {
       <View style={{ flex: 1, flexDirection: "column" }}>
         <PageHeader navigation={this.props.navigation}></PageHeader>
 
-        <TouchableWithoutFeedback
-          style={{ flex: 1 }}
-          onPress={this.doMoreStuff.bind(this)}
-        >
+        <TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.doStuff}>
           <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
             <View style={{ flex: 0.5, backgroundColor: "#CAC4CE" }}></View>
             <View style={{ flex: 1 }}>
@@ -51,7 +45,7 @@ class Playgroups extends React.Component {
                   color: "#242038",
                 }}
               >
-                Add a<Text style={{ fontWeight: "700" }}> playgroup</Text>
+                NAME THE<Text style={{ fontWeight: "700" }}> playgroup</Text>
               </Text>
             </View>
           </View>
@@ -91,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Playgroups;
+export default AddPlaygroup;

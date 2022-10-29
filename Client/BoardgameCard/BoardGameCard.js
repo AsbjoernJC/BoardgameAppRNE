@@ -23,7 +23,7 @@ class BoardgameCard extends React.Component {
   render() {
     return (
       <TouchableWithoutFeedback
-        onPress={this.doStuff}
+        onPress={this.doStuff.bind(this)}
         style={{ backgroundColor: "#242038" }}
       >
         <View style={styles.boardgameCardView}>
