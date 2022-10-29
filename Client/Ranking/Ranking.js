@@ -50,7 +50,7 @@ class Ranking extends React.Component {
         style={styles.image}
       />
     );
-    console.log("hello");
+    console.log("Ranking page");
 
     return (
       <SafeAreaView style={styles.safeAreaView}>

@@ -17,19 +17,22 @@ class PlaygroupMember extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      name: "`",
+      image: null,
+      index: null,
     };
   }
 
   setPlayerName(input) {
-    this.setState({
-      name: input,
-    });
-  }
-
-  componentDidMount() {
-    console.log("hello");
-    this.props.addPgmComponent(this);
+    console.log("settingPlayerName");
+    this.setState(
+      {
+        name: input,
+      },
+      () => {
+        this.props.updateMemberList(this.props.index, this);
+      }
+    );
   }
 
   render() {
