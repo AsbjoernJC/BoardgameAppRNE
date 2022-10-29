@@ -1,55 +1,107 @@
 import React from "react";
-import { Text, Icon } from "@rneui/themed";
-import PageHeader from "../PageHeader/PageHeader";
+import { Text, Icon, Input } from "@rneui/themed";
+import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
+import PlaygroupMember from "./PlaygroupMember";
 
 import {
   StyleSheet,
   View,
   Dimensions,
   TouchableWithoutFeedback,
+  FlatList,
 } from "react-native";
+import { KeyboardAvoidingView } from "react-native";
 
 const numColumns = 2;
 
 class AddPlaygroup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      playgroupName: "",
+      members: [],
+      pgmComponents: [],
+    };
   }
 
-  doStuff() {
-    console.log("DIDSTUFF");
+  setPlaygroupName(input) {
+    console.log(input);
+    this.setState({ playgroupName: input });
   }
+
+  addPgmComponent(pgmComponent) {
+    console.log(pgmComponent);
+    console.log(this);
+    let localPgmComponents = this.state.pgmComponents;
+    localPgmComponents.push(pgmComponent);
+
+    this.setState(
+      {
+        pgmComponents: localPgmComponents,
+      },
+      () => {
+        console.log(this.state.pgmComponents);
+      }
+    );
+  }
+
+  componentDidMount() {
+    this.setState({ members: [0] });
+  }
+
+  renderItem = ({ item, index }) => {
+    return (
+      <PlaygroupMember
+        index={index}
+        addPgmComponent={this.addPgmComponent.bind(this)}
+      />
+    );
+  };
 
   render() {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
-        <PageHeader navigation={this.props.navigation}></PageHeader>
+        <PageheaderNoSearch
+          navigation={this.props.navigation}
+        ></PageheaderNoSearch>
 
-        <TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.doStuff}>
-          <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
-            <View style={{ flex: 0.5, backgroundColor: "#CAC4CE" }}></View>
-            <View style={{ flex: 1 }}>
-              <Icon
-                name="plus"
-                type="font-awesome"
-                iconProps={{ size: 50 }}
-                color="#242038"
-                iconStyle={{}}
-                style={{}}
-              />
-              <Text
-                style={{
-                  alignSelf: "center",
-                  fontSize: 28,
-                  color: "#242038",
-                }}
-              >
-                NAME THE<Text style={{ fontWeight: "700" }}> playgroup</Text>
-              </Text>
-            </View>
+        <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
+          <View style={{ flex: 0.13 }}>
+            <Input
+              onChangeText={this.setPlaygroupName.bind(this)}
+              placeholderTextColor="#676174"
+              containerStyle={{
+                justifyContent: "center",
+                alignContent: "center",
+                marginTop: "3%",
+                textAlignVertical: "center",
+              }}
+              inputStyle={{
+                alignSelf: "center",
+                justifyContent: "center",
+                fontSize: 25,
+              }}
+              textAlign="center"
+              inputContainerStyle={{
+                borderBottomWidth: 0,
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center",
+                alignSelf: "center",
+                textAlignVertical: "center",
+              }}
+              placeholder="Name the playgroup"
+            />
           </View>
-        </TouchableWithoutFeedback>
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={this.state.members}
+              style={styles.container}
+              renderItem={this.renderItem.bind(this)}
+              numColumns={numColumns}
+            />
+          </View>
+        </View>
       </View>
     );
   }
@@ -65,7 +117,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginVertical: 20,
+    marginVertical: 0,
     backgroundColor: "#CAC4CE",
   },
   boardgameCard: {

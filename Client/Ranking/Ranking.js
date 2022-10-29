@@ -25,6 +25,7 @@ import {
   Col,
   Cell,
 } from "react-native-table-component";
+import Pageheader from "../PageHeader/PageHeader";
 const theme = createTheme({});
 
 class Ranking extends React.Component {
@@ -53,6 +54,7 @@ class Ranking extends React.Component {
 
     return (
       <SafeAreaView style={styles.safeAreaView}>
+        <Pageheader></Pageheader>
         <ScrollView style={styles.scrollView}>
           <ThemeProvider theme={theme}>
             <Button
