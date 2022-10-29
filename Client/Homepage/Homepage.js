@@ -3,6 +3,7 @@ import React from "react";
 import { Button, createTheme, ButtonGroup, Text, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { IMAGES } from "../StaticImages/images";
+import { compareTwoStrings } from "../../node_modules/string-similarity/src/index";
 
 import {
   StyleSheet,
@@ -12,6 +13,7 @@ import {
   SafeAreaView,
   Dimensions,
   TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
@@ -23,37 +25,79 @@ class Homepage extends React.Component {
   constructor() {
     super();
     this.state = {
+      allBoardgames: [],
       boardgames: [],
     };
   }
 
   assignBoardgames() {
-    this.setState({ boardgames: BOARDGAMES });
+    let locBoardgames = BOARDGAMES;
+
+    this.setState({
+      allBoardgames: locBoardgames,
+      boardgames: locBoardgames,
+    });
   }
 
   searchBoardgames(input) {
+    if (input.length === 0) {
+      this.setState({ boardgames: this.state.allBoardgames });
+    }
+    let sortedBoardgames = [];
+
+    sortedBoardgames = this.stringBoardgameSearch(
+      input,
+      this.state.allBoardgames
+    );
+    // unsortedBoardgames.sort((firstBoardgame, secondBoardgame) =>
+    // this.compareBoardgames(firstBoardgame, secondBoardgame, input)
+    // );
+    this.setState({
+      boardgames: sortedBoardgames,
+    });
+
     console.log(input);
+  }
+
+  stringBoardgameSearch(searchValue, boardgames) {
+    let returnBoardgames = [];
+    console.log(boardgames);
+    boardgames.forEach((boardgame) => {
+      if (boardgame == undefined) {
+        console.log(boardgame);
+      }
+
+      let lowerBoardgameTitle = boardgame.toLowerCase();
+      if (lowerBoardgameTitle.includes(searchValue.toLowerCase())) {
+        returnBoardgames.push(boardgame);
+      }
+    });
+    return returnBoardgames;
+  }
+
+  compareBoardgames(firstBoardgame, secondBoardgame, input) {
+    let firstSimilarity = compareTwoStrings(firstBoardgame, input);
+    let secondSimilarity = compareTwoStrings(secondBoardgame, input);
+
+    console.log(firstBoardgame);
+    if (firstSimilarity < secondSimilarity) {
+      return -1;
+    }
+    if (firstSimilarity > secondSimilarity) {
+      return 1;
+    }
+    return 0;
   }
 
   formatData = (data, numColumns) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
 
     let numberOfElementsLastRow = data.length % numColumns;
-    while (
-      numberOfElementsLastRow !== numColumns &&
-      numberOfElementsLastRow !== 0
-    ) {
-      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
-      numberOfElementsLastRow++;
-    }
 
     return data;
   };
 
   renderItem = ({ item, index }) => {
-    if (item.empty === true) {
-      return <View style={[styles.boardgameCard, styles.itemInvisible]} />;
-    }
     return (
       <View style={styles.boardgameCard}>
         <BoardgameCard
@@ -70,68 +114,75 @@ class Homepage extends React.Component {
   }
 
   render() {
-    console.log("Homepage.js");
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
         <View style={{ flex: 0.15, backgroundColor: "#CAC4CE" }}>
-          <View //Dette er samlingen af knapper
-            style={[
-              styles.buttonGroup,
-              {
-                flexDirection: "row",
-                minHeight: "20%",
-              },
-            ]}
+          <KeyboardAvoidingView
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            behavior="padding"
           >
-            <View style={{ flex: 1, margin: 5 }}>
-              <Button
-                color="#D17B0F"
-                buttonStyle={{
-                  borderRadius: 8,
-                  fontSize: 17,
-                }}
-                onPress={() => this.props.navigation.navigate("Homepage")}
-                title="Boardgames"
-                titleStyle={{
-                  fontWeight: "700",
-                  fontSize: 17,
-                  color: "#F7ECE1",
-                }}
-              />
-            </View>
-            <View //Dette er samlingen af navbuttons
-              style={{ flex: 1, margin: 5 }}
+            <View //Dette er samlingen af knapper
+              style={[
+                styles.buttonGroup,
+                {
+                  flexDirection: "row",
+                  minHeight: "20%",
+                },
+              ]}
             >
-              <Button
-                color="#242038"
-                buttonStyle={{
-                  borderRadius: 8,
-                }}
-                onPress={() => this.props.navigation.navigate("Playgroups")}
-                title="Playgroups"
-                titleStyle={{
-                  fontWeight: "700",
-                  fontSize: 17,
-                  color: "#F7ECE1",
-                }}
-              />
+              <View style={{ flex: 1, margin: 5 }}>
+                <Button
+                  color="#D17B0F"
+                  buttonStyle={{
+                    borderRadius: 8,
+                    fontSize: 17,
+                    minHeight: 41,
+                  }}
+                  onPress={() => this.props.navigation.navigate("Homepage")}
+                  title="Boardgames"
+                  titleStyle={{
+                    fontWeight: "700",
+                    fontSize: 17,
+                    color: "#F7ECE1",
+                  }}
+                />
+              </View>
+              <View //Dette er samlingen af navbuttons
+                style={{ flex: 1, margin: 5 }}
+              >
+                <Button
+                  color="#242038"
+                  buttonStyle={{
+                    borderRadius: 8,
+                    minHeight: 41,
+                  }}
+                  onPress={() => this.props.navigation.navigate("Playgroups")}
+                  title="Playgroups"
+                  titleStyle={{
+                    fontWeight: "700",
+                    fontSize: 17,
+                    color: "#F7ECE1",
+                  }}
+                />
+              </View>
+              <View style={{ flex: 1, margin: 5 }}>
+                <Button
+                  color="#242038"
+                  buttonStyle={{
+                    borderRadius: 8,
+                    minHeight: 41,
+                  }}
+                  onPress={() => this.props.navigation.navigate("Ranking")}
+                  title="Ranking"
+                  titleStyle={{
+                    fontWeight: "700",
+                    fontSize: 17,
+                    color: "#F7ECE1",
+                  }}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1, margin: 5 }}>
-              <Button
-                color="#242038"
-                buttonStyle={{
-                  borderRadius: 8,
-                }}
-                onPress={() => this.props.navigation.navigate("Ranking")}
-                title="Ranking"
-                titleStyle={{
-                  fontWeight: "700",
-                  fontSize: 17,
-                  color: "#F7ECE1",
-                }}
-              />
-            </View>
-          </View>
+          </KeyboardAvoidingView>
         </View>
         <View // Dette er samlingen af search baren Forsøg at fixe den således,
           //når man vil inputte tekst maybe:https://www.google.com/search?q=react+native+text+input+shrinks+when+typing&oq=react+native+text+input+shrinks+when+typing&aqs=chrome..69i57j69i64l3.12396j0j7&sourceid=chrome&ie=UTF-8
@@ -205,29 +256,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingTop: 50,
-//     backgroundColor: "#CAC4CE",
-//   },
-//   containerContainer: {
-//     flex: 1,
-//   },
-//   containeren: {
-//     flex: 1,
-//     backgroundColor: "#CAC4CE",
-//   },
-//   item: {
-//     backgroundColor: "#f9c2ff",
-//     padding: 20,
-//     marginVertical: 8,
-//     marginHorizontal: 16,
-//   },
-//   title: {
-//     fontSize: 32,
-//   },
-// });
 
 export default Homepage;
