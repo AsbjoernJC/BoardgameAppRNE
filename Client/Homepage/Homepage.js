@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, createTheme, ButtonGroup, Text, Input } from "@rneui/themed";
+import { Button, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { IMAGES } from "../StaticImages/images";
 import { compareTwoStrings } from "../../node_modules/string-similarity/src/index";
@@ -8,15 +8,12 @@ import { compareTwoStrings } from "../../node_modules/string-similarity/src/inde
 import {
   StyleSheet,
   View,
-  ScrollView,
   FlatList,
   SafeAreaView,
   Dimensions,
-  TextInput,
   KeyboardAvoidingView,
 } from "react-native";
 
-import NavButtonGroup from "../NavButtonGroup/Navbuttongroup";
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
 
 const numColumns = 2;

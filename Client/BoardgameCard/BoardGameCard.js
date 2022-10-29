@@ -1,22 +1,11 @@
 import React from "react";
-import {
-  Button,
-  createTheme,
-  ButtonGroup,
-  Text,
-  Card,
-  Icon,
-} from "@rneui/themed";
-import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
+import { Card } from "@rneui/themed";
 import {
   View,
-  ScrollView,
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
-import { render } from "react-dom";
-import { FlatList } from "react-native-gesture-handler";
 
 class BoardgameCard extends React.Component {
   constructor(props) {
@@ -33,7 +22,10 @@ class BoardgameCard extends React.Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={this.doStuff}>
+      <TouchableWithoutFeedback
+        onPress={this.doStuff}
+        style={{ backgroundColor: "#242038" }}
+      >
         <View style={styles.boardgameCardView}>
           <Card
             containerStyle={{
