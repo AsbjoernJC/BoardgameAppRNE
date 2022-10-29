@@ -40,10 +40,7 @@ class PlaygroupMember extends React.Component {
       <Input
         onChangeText={this.setPlayerName.bind(this)}
         placeholderTextColor="#676174"
-        containerStyle={{
-          justifyContent: "center",
-          alignContent: "center",
-        }}
+        containerStyle={{}}
         textAlign="center"
         placeholder="Name a group member"
         inputContainerStyle={{ borderBottomWidth: 0 }}

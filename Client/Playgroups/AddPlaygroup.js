@@ -26,37 +26,42 @@ class AddPlaygroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      members: ["a", "c"],
+      members: [],
       playgroupName: "",
     };
   }
 
   updateMemberList(index, memberComponent) {
-    // if (this.state.members.length === 0) {
-    //   let members = [];
-    //   members.push(memberComponent);
-    //   this.setState({ members }, () => {
-    //     this.updateMemberList(index, memberComponent);
-    //   });
-    //   return;
-    // }
-    // let emptyNameCount = 0;
-    // let allPotentialMembers = this.state.members;
-    // allPotentialMembers.push(memberComponent);
-    // let updatedMembers = [];
-    // allPotentialMembers.forEach((member, memIndex) => {
-    //   if (member.state.name === "" && member.state.image === null) {
-    //     emptyNameCount++;
-    //     return;
-    //   }
-    //   if (emptyNameCount !== 2) {
-    //     updatedMembers.push(this.state.members[memIndex]);
-    //   }
-    // });
-    // this.setState({ members: updatedMembers });
+    if (this.state.members.length === 0) {
+      let members = [];
+      members.push(memberComponent);
+      this.setState({ members }, () => {
+        this.updateMemberList(index, memberComponent);
+      });
+      return;
+    }
+    let emptyNameCount = 0;
+    let updatedMembers = [];
+
+    // Still needs fixing
+    this.state.members.forEach((member, memIndex) => {
+      if (member?.state?.name === "" && member.state.image === null) {
+        emptyNameCount++;
+        return;
+      }
+      if (emptyNameCount < 2) {
+        updatedMembers.push(this.state.members[memIndex]);
+      }
+      if (emptyNameCount === 0 && memIndex + 1 === this.state.members.length) {
+        updatedMembers.push("");
+      }
+    });
+    this.setState({ members: updatedMembers });
   }
 
   renderItem = ({ item, index }) => {
+    console.log(index);
+    console.log(this.state.members);
     return (
       <PlaygroupMember
         index={index}
