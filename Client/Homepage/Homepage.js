@@ -4,6 +4,7 @@ import { Button, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { IMAGES } from "../StaticImages/images";
 import { compareTwoStrings } from "../../node_modules/string-similarity/src/index";
+import { boardgamePlays as BOARDGAMEPLAYS } from "../JsonFiles/boardgameswplaygroups.json";
 
 import {
   StyleSheet,
@@ -15,6 +16,7 @@ import {
 } from "react-native";
 
 import BoardgameCard from "../BoardgameCard/BoardGameCard";
+import PageHeader from "../PageHeader/PageHeader";
 
 const numColumns = 2;
 
@@ -28,24 +30,22 @@ class Homepage extends React.Component {
   }
 
   assignBoardgames() {
-    let locBoardgames = BOARDGAMES;
+    let allBoardgames = BOARDGAMES;
+    console.log(BOARDGAMEPLAYS["1775-rebellion"]);
 
     this.setState({
-      allBoardgames: locBoardgames,
-      boardgames: locBoardgames,
+      boardgames: allBoardgames,
     });
   }
 
   searchBoardgames(input) {
+    let allBoardgames = BOARDGAMES;
     if (input.length === 0) {
-      this.setState({ boardgames: this.state.allBoardgames });
+      this.setState({ boardgames: allBoardgames });
     }
     let sortedBoardgames = [];
 
-    sortedBoardgames = this.stringBoardgameSearch(
-      input,
-      this.state.allBoardgames
-    );
+    sortedBoardgames = this.stringBoardgameSearch(input, allBoardgames);
     // unsortedBoardgames.sort((firstBoardgame, secondBoardgame) =>
     // this.compareBoardgames(firstBoardgame, secondBoardgame, input)
     // );
@@ -58,12 +58,7 @@ class Homepage extends React.Component {
 
   stringBoardgameSearch(searchValue, boardgames) {
     let returnBoardgames = [];
-    console.log(boardgames);
     boardgames.forEach((boardgame) => {
-      if (boardgame == undefined) {
-        console.log(boardgame);
-      }
-
       let lowerBoardgameTitle = boardgame.toLowerCase();
       if (lowerBoardgameTitle.includes(searchValue.toLowerCase())) {
         returnBoardgames.push(boardgame);
@@ -113,111 +108,17 @@ class Homepage extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
-        <View style={{ flex: 0.15, backgroundColor: "#CAC4CE" }}>
-          <KeyboardAvoidingView
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-            behavior="padding"
-          >
-            <View //Dette er samlingen af knapper
-              style={[
-                styles.buttonGroup,
-                {
-                  flexDirection: "row",
-                  minHeight: "20%",
-                },
-              ]}
-            >
-              <View style={{ flex: 1, margin: 5 }}>
-                <Button
-                  color="#D17B0F"
-                  buttonStyle={{
-                    borderRadius: 8,
-                    fontSize: 17,
-                    minHeight: 41,
-                  }}
-                  onPress={() => this.props.navigation.navigate("Homepage")}
-                  title="Boardgames"
-                  titleStyle={{
-                    fontWeight: "700",
-                    fontSize: 17,
-                    color: "#F7ECE1",
-                  }}
-                />
-              </View>
-              <View //Dette er samlingen af navbuttons
-                style={{ flex: 1, margin: 5 }}
-              >
-                <Button
-                  color="#242038"
-                  buttonStyle={{
-                    borderRadius: 8,
-                    minHeight: 41,
-                  }}
-                  onPress={() => this.props.navigation.navigate("Playgroups")}
-                  title="Playgroups"
-                  titleStyle={{
-                    fontWeight: "700",
-                    fontSize: 17,
-                    color: "#F7ECE1",
-                  }}
-                />
-              </View>
-              <View style={{ flex: 1, margin: 5 }}>
-                <Button
-                  color="#242038"
-                  buttonStyle={{
-                    borderRadius: 8,
-                    minHeight: 41,
-                  }}
-                  onPress={() => this.props.navigation.navigate("Ranking")}
-                  title="Ranking"
-                  titleStyle={{
-                    fontWeight: "700",
-                    fontSize: 17,
-                    color: "#F7ECE1",
-                  }}
-                />
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-        </View>
-        <View // Dette er samlingen af search baren Forsøg at fixe den således,
-          //når man vil inputte tekst maybe:https://www.google.com/search?q=react+native+text+input+shrinks+when+typing&oq=react+native+text+input+shrinks+when+typing&aqs=chrome..69i57j69i64l3.12396j0j7&sourceid=chrome&ie=UTF-8
-          style={{
-            flex: 0.08,
-            backgroundColor: "#d9d9d9",
-            borderRadius: 8,
-            alignSelf: "center",
-            width: "80%",
-            marginTop: 15,
-          }}
-        >
-          <Input
-            onChangeText={(input) => this.searchBoardgames(input)}
-            containerStyle={{
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: 5,
-            }}
-            inputStyle={{ alignSelf: "center" }}
-            placeholder="Search after a boardgame"
-            leftIcon={{
-              marginRight: 20,
-              type: "font-awesome",
-              name: "search",
-              color: "#242038",
-            }}
+        <PageHeader
+          navigation={this.props.navigation}
+          search={(input) => this.searchBoardgames(input)}
+        ></PageHeader>
+        <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
+          <FlatList
+            data={this.formatData(this.state.boardgames, numColumns)}
+            style={styles.container}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
           />
-        </View>
-        <View style={{ flex: 1 }}>
-          <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
-            <FlatList
-              data={this.formatData(this.state.boardgames, numColumns)}
-              style={styles.container}
-              renderItem={this.renderItem}
-              numColumns={numColumns}
-            />
-          </View>
         </View>
       </SafeAreaView>
     );

@@ -27,7 +27,7 @@ class Pageheader extends React.Component {
         style={{
           flex: 0.27,
           flexDirection: "column",
-          backgroundColor: "black",
+          backgroundColor: "#CAC4CE",
         }}
       >
         <View style={{ flex: 0.9, backgroundColor: "#CAC4CE" }}>
@@ -113,7 +113,7 @@ class Pageheader extends React.Component {
           }}
         >
           <Input
-            onChangeText={(input) => this.searchBoardgames(input)}
+            onChangeText={this.props.search}
             containerStyle={{
               justifyContent: "center",
               alignContent: "center",
