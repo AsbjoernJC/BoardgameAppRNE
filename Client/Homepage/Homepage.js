@@ -101,6 +101,7 @@ class Homepage extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
         <PageHeader
+          activePage={0}
           navigation={this.props.navigation}
           search={(input) => this.searchBoardgames(input)}
         ></PageHeader>

@@ -4,6 +4,7 @@ import {
   createTheme,
   ThemeProvider,
   ActivityIndicator,
+  Input,
 } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import {
@@ -31,34 +32,43 @@ class AddPlaygroup extends React.Component {
     };
   }
 
+  // Burde at ske når en bruger forlader textinput felt
   updateMemberList(index, memberComponent) {
+    let updatedMembers = this.state.members;
     if (this.state.members.length === 0) {
-      let members = [];
-      members.push(memberComponent);
-      this.setState({ members }, () => {
-        this.updateMemberList(index, memberComponent);
-      });
-      return;
+      updatedMembers.push(memberComponent);
+    } else if (
+      this.state.members.length !== 1 &&
+      this.state.members.length - 1 === index
+    ) {
+      updatedMembers.push(memberComponent);
     }
-    let emptyNameCount = 0;
-    let updatedMembers = [];
 
-    // Still needs fixing
-    this.state.members.forEach((member, memIndex) => {
-      if (member?.state?.name === "" && member.state.image === null) {
+    let memberToRemove = null;
+    let emptyNameCount = 0;
+
+    updatedMembers.forEach((member, index) => {
+      if (
+        member === "" ||
+        (member?.state?.name === "" && member.state.image === null)
+      ) {
+        memberToRemove = index;
         emptyNameCount++;
-        return;
-      }
-      if (emptyNameCount < 2) {
-        updatedMembers.push(this.state.members[memIndex]);
-      }
-      if (emptyNameCount === 0 && memIndex + 1 === this.state.members.length) {
-        updatedMembers.push("");
       }
     });
+
+    if (memberToRemove !== null) {
+      updatedMembers.splice(memberToRemove, 1);
+      emptyNameCount--;
+    }
+    if (emptyNameCount === 0) updatedMembers.push("");
+
     this.setState({ members: updatedMembers });
   }
 
+  setPlaygroupName() {}
+
+  // Måske i stedet for render ting fra members baseret på index?
   renderItem = ({ item, index }) => {
     console.log(index);
     console.log(this.state.members);
@@ -75,7 +85,18 @@ class AddPlaygroup extends React.Component {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
         <PageheaderNoSearch
           navigation={this.props.navigation}
+          activePage={1}
         ></PageheaderNoSearch>
+        <View style={{ backgroundColor: "#CAC4CE", flex: 0.1 }}>
+          <Input
+            onChangeText={this.setPlaygroupName.bind(this)}
+            placeholderTextColor="#676174"
+            textAlign="center"
+            inputStyle={{ color: "#242038", fontSize: 24 }}
+            placeholder="Name the playgroup"
+            inputContainerStyle={{ borderBottomWidth: 0, alignItems: "center" }}
+          />
+        </View>
         <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
           <FlatList
             data={this.state.members.length === 0 ? [""] : this.state.members}
@@ -92,7 +113,7 @@ class AddPlaygroup extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 0,
     backgroundColor: "#CAC4CE",
   },
 });

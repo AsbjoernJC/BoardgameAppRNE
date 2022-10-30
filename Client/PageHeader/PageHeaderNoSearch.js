@@ -40,7 +40,7 @@ class PageheaderNoSearch extends React.Component {
             >
               <View style={{ flex: 1, margin: 5 }}>
                 <Button
-                  color="#D17B0F"
+                  color={this.props.activePage === 0 ? "#D17B0F" : "#242038"}
                   buttonStyle={{
                     borderRadius: 8,
                     fontSize: 17,
@@ -59,7 +59,7 @@ class PageheaderNoSearch extends React.Component {
                 style={{ flex: 1, margin: 5 }}
               >
                 <Button
-                  color="#242038"
+                  color={this.props.activePage === 1 ? "#D17B0F" : "#242038"}
                   buttonStyle={{
                     borderRadius: 8,
                     minHeight: 41,
@@ -75,7 +75,7 @@ class PageheaderNoSearch extends React.Component {
               </View>
               <View style={{ flex: 1, margin: 5 }}>
                 <Button
-                  color="#242038"
+                  color={this.props.activePage === 2 ? "#D17B0F" : "#242038"}
                   buttonStyle={{
                     borderRadius: 8,
                     minHeight: 41,

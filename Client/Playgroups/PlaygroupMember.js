@@ -41,56 +41,26 @@ class PlaygroupMember extends React.Component {
         onChangeText={this.setPlayerName.bind(this)}
         placeholderTextColor="#676174"
         containerStyle={{}}
+        inputStyle={{ color: "#242038" }}
         textAlign="center"
         placeholder="Name a group member"
-        inputContainerStyle={{ borderBottomWidth: 0 }}
+        inputContainerStyle={{ borderBottomWidth: 0, alignItems: "center" }}
         leftIcon={{
-          marginRight: 20,
           type: "font-awesome",
-          name: "plus",
+          name: "camera",
           color: "#242038",
           size: 36,
         }}
         rightIcon={{
           marginRight: 0,
           type: "font-awesome",
-          name: "camera",
+          name: "image",
           color: "#242038",
-          size: 34,
+          size: 36,
         }}
       />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  buttonGroup: {
-    flex: 1,
-    paddingTop: 10,
-    height: 50,
-    minHeight: 50,
-    backgroundColor: "#CAC4CE",
-  },
-  container: {
-    flex: 1,
-    marginVertical: 0,
-    backgroundColor: "#CAC4CE",
-  },
-  boardgameCard: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    margin: "6.5%",
-    height: Dimensions.get("window").width / numColumns, // approximate a square
-  },
-  itemInvisible: {
-    backgroundColor: "transparent",
-  },
-  itemText: {
-    color: "#F7ECE1",
-    fontWeight: "700",
-    fontSize: 17,
-  },
-});
 
 export default PlaygroupMember;

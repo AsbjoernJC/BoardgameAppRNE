@@ -54,7 +54,7 @@ class Ranking extends React.Component {
 
     return (
       <SafeAreaView style={styles.safeAreaView}>
-        <Pageheader></Pageheader>
+        <Pageheader activePage={2}></Pageheader>
         <ScrollView style={styles.scrollView}>
           <ThemeProvider theme={theme}>
             <Button
