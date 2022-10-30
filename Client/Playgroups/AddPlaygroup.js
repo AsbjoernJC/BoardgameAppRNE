@@ -5,6 +5,7 @@ import {
   ThemeProvider,
   ActivityIndicator,
   Input,
+  Icon,
 } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import {
@@ -17,6 +18,7 @@ import {
   Alert,
   SafeAreaView,
   FlatList,
+  Dimensions,
 } from "react-native";
 
 import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
@@ -33,6 +35,8 @@ class AddPlaygroup extends React.Component {
   }
 
   // Burde at ske når en bruger forlader textinput felt
+  // Denne her om brugen af flat list kan måske hjælpe. https://www.youtube.com/watch?v=Kmn_SJwtihQ
+  // https://www.youtube.com/watch?v=00HFzh3w1B8
   updateMemberList(index, memberComponent) {
     let updatedMembers = this.state.members;
     if (this.state.members.length === 0) {
@@ -50,7 +54,7 @@ class AddPlaygroup extends React.Component {
     updatedMembers.forEach((member, index) => {
       if (
         member === "" ||
-        (member?.state?.name === "" && member.state.image === null)
+        (member.state.name === "" && member.state.image === null)
       ) {
         memberToRemove = index;
         emptyNameCount++;
@@ -66,12 +70,12 @@ class AddPlaygroup extends React.Component {
     this.setState({ members: updatedMembers });
   }
 
-  setPlaygroupName() {}
+  setPlaygroupName(input) {
+    this.setState({ playgroupName: input });
+  }
 
   // Måske i stedet for render ting fra members baseret på index?
   renderItem = ({ item, index }) => {
-    console.log(index);
-    console.log(this.state.members);
     return (
       <PlaygroupMember
         index={index}
@@ -97,13 +101,76 @@ class AddPlaygroup extends React.Component {
             inputContainerStyle={{ borderBottomWidth: 0, alignItems: "center" }}
           />
         </View>
-        <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
+        <View style={{ backgroundColor: "#CAC4CE", flex: 0.6 }}>
           <FlatList
             data={this.state.members.length === 0 ? [""] : this.state.members}
             style={styles.container}
             renderItem={this.renderItem}
             numColumns={1}
           />
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+            }}
+          >
+            <Button
+              color="#242038"
+              buttonStyle={{
+                borderRadius: 20,
+                minHeight: 41,
+                margin: 10,
+              }}
+              onPress={() => this.props.navigation.navigate("Playgroups")}
+              title="Add a group photo"
+              titleStyle={{
+                fontWeight: "700",
+                fontSize: 17,
+                height: Dimensions.get("window").height * 0.05,
+                width: Dimensions.get("window").width * 0.5,
+                color: "#F7ECE1",
+                alignSelf: "center",
+                textAlignVertical: "center",
+              }}
+            >
+              <Icon
+                type="font-awesome"
+                name="camera"
+                color="#F7ECE1"
+                size={30}
+                style={{ margin: 0 }}
+              />
+              Add a group photo
+            </Button>
+            <Button
+              color="#242038"
+              buttonStyle={{
+                borderRadius: 20,
+                minHeight: 41,
+              }}
+              onPress={() => this.props.navigation.navigate("Playgroups")}
+              title="Create playgroup"
+              titleStyle={{
+                fontWeight: "700",
+                fontSize: 17,
+                height: Dimensions.get("window").height * 0.05,
+                width: Dimensions.get("window").width * 0.5,
+                color: "#F7ECE1",
+                textAlignVertical: "center",
+              }}
+            >
+              <Icon
+                type="font-awesome"
+                name="users"
+                color="#F7ECE1"
+                size={30}
+                style={{ margin: 0 }}
+              />
+              Create playgroup
+            </Button>
+          </View>
         </View>
       </SafeAreaView>
     );
