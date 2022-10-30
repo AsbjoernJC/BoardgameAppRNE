@@ -23,6 +23,7 @@ import {
 
 import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
 import PlaygroupMember from "./PlaygroupMember";
+// import ImagePicker from "react-native-image-crop-picker"; find out at a later point
 const theme = createTheme({});
 
 class AddPlaygroup extends React.Component {
@@ -83,6 +84,34 @@ class AddPlaygroup extends React.Component {
       />
     );
   };
+
+  createPlaygroup() {
+    if (this.state.playgroupName === "") return;
+
+    let filteredMembers = this.state.members.filter((member) => {
+      return member.hasOwnProperty("state");
+    });
+
+    if (
+      filteredMembers.filter((member) => {
+        return member.state.name === "";
+      }).length === 0
+    ) {
+      let playgroupsData = require("../JsonFiles/playgroups.json");
+      let playgroupId = playgroupsData.playgroups.numGroups;
+
+      let playGroupObject = {
+        id: playgroupId,
+        name: this.state.playgroupName,
+        members: filteredMembers,
+      };
+
+      playgroupsData["playgroups"]["groups"].push(playGroupObject);
+      console.log(playgroupsData);
+      JSON.stringify({});
+      // https://react-native-async-storage.github.io/async-storage/docs/install
+    }
+  }
 
   render() {
     return (
@@ -150,7 +179,7 @@ class AddPlaygroup extends React.Component {
                 borderRadius: 20,
                 minHeight: 41,
               }}
-              onPress={() => this.props.navigation.navigate("Playgroups")}
+              onPress={this.createPlaygroup.bind(this)}
               title="Create playgroup"
               titleStyle={{
                 fontWeight: "700",

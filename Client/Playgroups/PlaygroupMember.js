@@ -24,7 +24,6 @@ class PlaygroupMember extends React.Component {
   }
 
   setPlayerName(input) {
-    console.log("settingPlayerName");
     this.setState(
       {
         name: input,

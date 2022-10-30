@@ -1,3 +1,6 @@
 {
-  "playgroups": []
+  "playgroups": {
+    "numGroups": 0,
+    "groups": []
+  }
 }
