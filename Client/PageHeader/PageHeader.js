@@ -27,6 +27,7 @@ class Pageheader extends React.Component {
       <View
         style={{
           flex: 0.27,
+          marginBottom: 60,
           flexDirection: "column",
           backgroundColor: "#CAC4CE",
         }}
@@ -67,7 +68,7 @@ class Pageheader extends React.Component {
                 />
               </View>
               <View //Dette er samlingen af navbuttons
-                style={{ flex: 1, margin: 5 }}
+                style={{ flex: 1, margin: 5, backgroundColor: "CAC4CE" }}
               >
                 <Button
                   color={this.props.activePage === 1 ? "#D17B0F" : "#242038"}
@@ -120,6 +121,7 @@ class Pageheader extends React.Component {
               alignContent: "center",
               marginTop: 5,
             }}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
             inputStyle={{ alignSelf: "center" }}
             placeholder="Search after a boardgame"
             leftIcon={{

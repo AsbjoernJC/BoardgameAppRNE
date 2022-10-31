@@ -21,76 +21,66 @@ class PageheaderNoSearch extends React.Component {
         }}
       >
         <View style={{ flex: 0.9, backgroundColor: "#CAC4CE" }}>
-          <KeyboardAvoidingView
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            behavior="padding"
+          <View //Dette er samlingen af knapper
+            style={[
+              styles.buttonGroup,
+              {
+                flexDirection: "row",
+              },
+            ]}
           >
-            <View //Dette er samlingen af knapper
-              style={[
-                styles.buttonGroup,
-                {
-                  flexDirection: "row",
-                  minHeight: "20%",
-                },
-              ]}
-            >
-              <View style={{ flex: 1, margin: 5 }}>
-                <Button
-                  color={this.props.activePage === 0 ? "#D17B0F" : "#242038"}
-                  buttonStyle={{
-                    borderRadius: 8,
-                    fontSize: 17,
-                    minHeight: 41,
-                  }}
-                  onPress={() => this.props.navigation.navigate("Homepage")}
-                  title="Boardgames"
-                  titleStyle={{
-                    fontWeight: "700",
-                    fontSize: 17,
-                    color: "#F7ECE1",
-                  }}
-                />
-              </View>
-              <View //Dette er samlingen af navbuttons
-                style={{ flex: 1, margin: 5 }}
-              >
-                <Button
-                  color={this.props.activePage === 1 ? "#D17B0F" : "#242038"}
-                  buttonStyle={{
-                    borderRadius: 8,
-                    minHeight: 41,
-                  }}
-                  onPress={() => this.props.navigation.navigate("Playgroups")}
-                  title="Playgroups"
-                  titleStyle={{
-                    fontWeight: "700",
-                    fontSize: 17,
-                    color: "#F7ECE1",
-                  }}
-                />
-              </View>
-              <View style={{ flex: 1, margin: 5 }}>
-                <Button
-                  color={this.props.activePage === 2 ? "#D17B0F" : "#242038"}
-                  buttonStyle={{
-                    borderRadius: 8,
-                    minHeight: 41,
-                  }}
-                  onPress={() => this.props.navigation.navigate("Ranking")}
-                  title="Ranking"
-                  titleStyle={{
-                    fontWeight: "700",
-                    fontSize: 17,
-                    color: "#F7ECE1",
-                  }}
-                />
-              </View>
+            <View style={{ flex: 1, margin: 5 }}>
+              <Button
+                color={this.props.activePage === 0 ? "#D17B0F" : "#242038"}
+                buttonStyle={{
+                  borderRadius: 8,
+                  fontSize: 17,
+                  minHeight: 41,
+                }}
+                onPress={() => this.props.navigation.navigate("Homepage")}
+                title="Boardgames"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  color: "#F7ECE1",
+                }}
+              />
             </View>
-          </KeyboardAvoidingView>
+            <View //Dette er samlingen af navbuttons
+              style={{ flex: 1, margin: 5 }}
+            >
+              <Button
+                color={this.props.activePage === 1 ? "#D17B0F" : "#242038"}
+                buttonStyle={{
+                  borderRadius: 8,
+                  minHeight: 41,
+                }}
+                onPress={() => this.props.navigation.navigate("Playgroups")}
+                title="Playgroups"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  color: "#F7ECE1",
+                }}
+              />
+            </View>
+            <View style={{ flex: 1, margin: 5 }}>
+              <Button
+                color={this.props.activePage === 2 ? "#D17B0F" : "#242038"}
+                buttonStyle={{
+                  borderRadius: 8,
+                  minHeight: 41,
+                }}
+                onPress={() => this.props.navigation.navigate("Ranking")}
+                title="Ranking"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  color: "#F7ECE1",
+                }}
+              />
+            </View>
+          </View>
         </View>
       </View>
     );

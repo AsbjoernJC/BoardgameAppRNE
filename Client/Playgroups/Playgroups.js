@@ -26,7 +26,9 @@ class Playgroups extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: "column" }}>
+      <View
+        style={{ flex: 1, flexDirection: "column", backgroundColor: "#CAC4CE" }}
+      >
         <PageHeader
           navigation={this.props.navigation}
           activePage={1}
@@ -37,8 +39,8 @@ class Playgroups extends React.Component {
           onPress={this.doMoreStuff.bind(this)}
         >
           <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
-            <View style={{ flex: 0.5, backgroundColor: "#CAC4CE" }}></View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 0.5, backgroundColor: "#CAC4CE" }} />
+            <View style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
               <Icon
                 name="plus"
                 type="font-awesome"
@@ -63,35 +65,5 @@ class Playgroups extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  buttonGroup: {
-    flex: 1,
-    paddingTop: 10,
-    height: 50,
-    minHeight: 50,
-    backgroundColor: "#CAC4CE",
-  },
-  container: {
-    flex: 1,
-    marginVertical: 20,
-    backgroundColor: "#CAC4CE",
-  },
-  boardgameCard: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    margin: "6.5%",
-    height: Dimensions.get("window").width / numColumns, // approximate a square
-  },
-  itemInvisible: {
-    backgroundColor: "transparent",
-  },
-  itemText: {
-    color: "#F7ECE1",
-    fontWeight: "700",
-    fontSize: 17,
-  },
-});
 
 export default Playgroups;

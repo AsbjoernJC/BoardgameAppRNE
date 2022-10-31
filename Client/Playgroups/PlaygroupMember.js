@@ -17,13 +17,15 @@ class PlaygroupMember extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "`",
+      name: "",
       image: null,
       index: null,
     };
   }
 
   setPlayerName(input) {
+    console.log("called setPlayerName");
+    console.log(new Date().toLocaleString());
     this.setState(
       {
         name: input,

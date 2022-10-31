@@ -13,12 +13,13 @@ import {
   View,
   ScrollView,
   Image,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   Text,
   Alert,
   SafeAreaView,
   FlatList,
   Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
@@ -39,51 +40,41 @@ class AddPlaygroup extends React.Component {
   // Denne her om brugen af flat list kan måske hjælpe. https://www.youtube.com/watch?v=Kmn_SJwtihQ
   // https://www.youtube.com/watch?v=00HFzh3w1B8
   updateMemberList(index, memberComponent) {
-    let updatedMembers = this.state.members;
-    if (this.state.members.length === 0) {
-      updatedMembers.push(memberComponent);
-    } else if (
-      this.state.members.length !== 1 &&
-      this.state.members.length - 1 === index
-    ) {
-      updatedMembers.push(memberComponent);
-    }
-
-    let memberToRemove = null;
-    let emptyNameCount = 0;
-
-    updatedMembers.forEach((member, index) => {
+    let memberComponentIsIncluded = false;
+    let updatedMembers = this.state.members.filter((member) => {
       if (
-        member === "" ||
-        (member.state.name === "" && member.state.image === null)
+        member !== "" &&
+        member.props.index !== index &&
+        member.state.name !== ""
       ) {
-        memberToRemove = index;
-        emptyNameCount++;
+        return member;
+      } else if (member?.props?.index === index) {
+        memberComponentIsIncluded = true;
+        return memberComponent;
       }
     });
 
-    if (memberToRemove !== null) {
-      updatedMembers.splice(memberToRemove, 1);
-      emptyNameCount--;
+    if (!memberComponentIsIncluded) {
+      updatedMembers.push(memberComponent);
+      updatedMembers.push("");
+      this.setState({ members: updatedMembers }, () => {
+        console.log(this.state.members);
+        console.log("Updated members ");
+        console.log(new Date().toLocaleString());
+      });
+    } else {
+      if (memberComponent.state.name !== "") updatedMembers.push("");
+      this.setState({ members: updatedMembers }, () => {
+        console.log(this.state.members);
+        console.log("Updated members ");
+        console.log(new Date().toLocaleString());
+      });
     }
-    if (emptyNameCount === 0) updatedMembers.push("");
-
-    this.setState({ members: updatedMembers });
   }
 
   setPlaygroupName(input) {
     this.setState({ playgroupName: input });
   }
-
-  // Måske i stedet for render ting fra members baseret på index?
-  renderItem = ({ item, index }) => {
-    return (
-      <PlaygroupMember
-        index={index}
-        updateMemberList={this.updateMemberList.bind(this)}
-      />
-    );
-  };
 
   createPlaygroup() {
     if (this.state.playgroupName === "") return;
@@ -112,6 +103,10 @@ class AddPlaygroup extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({ members: [""] });
+  }
+
   async pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -125,30 +120,43 @@ class AddPlaygroup extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
+      <KeyboardAvoidingView
+        behavior="height"
+        style={{ flex: 1, backgroundColor: "#CAC4CE" }}
+      >
         <PageheaderNoSearch
           navigation={this.props.navigation}
           activePage={1}
         ></PageheaderNoSearch>
-        <View style={{ backgroundColor: "#CAC4CE", flex: 0.1 }}>
+        <View style={{ flex: 0.1 }}>
           <Input
             onChangeText={this.setPlaygroupName.bind(this)}
             placeholderTextColor="#676174"
             textAlign="center"
             inputStyle={{ color: "#242038", fontSize: 24 }}
             placeholder="Name the playgroup"
-            inputContainerStyle={{ borderBottomWidth: 0, alignItems: "center" }}
+            inputContainerStyle={{
+              borderBottomWidth: 0,
+              alignItems: "center",
+            }}
           />
         </View>
-        <View style={{ backgroundColor: "#CAC4CE", flex: 0.6 }}>
-          <FlatList
-            data={this.state.members.length === 0 ? [""] : this.state.members}
-            style={styles.container}
-            renderItem={this.renderItem}
-            numColumns={1}
-          />
-        </View>
-        <View style={{ flexDirection: "row" }}>
+        <ScrollView style={{ flex: 0.6 }}>
+          {this.state.members.map((member, index) => {
+            return (
+              <PlaygroupMember
+                index={index}
+                updateMemberList={this.updateMemberList.bind(this)}
+              ></PlaygroupMember>
+            );
+          })}
+        </ScrollView>
+        <View
+          style={{
+            flexDirection: "row",
+            marginBottom: Dimensions.get("window").height * 0.05,
+          }}
+        >
           <View
             style={{
               flex: 1,
@@ -211,7 +219,7 @@ class AddPlaygroup extends React.Component {
             </Button>
           </View>
         </View>
-      </SafeAreaView>
+      </KeyboardAvoidingView>
     );
   }
 }
