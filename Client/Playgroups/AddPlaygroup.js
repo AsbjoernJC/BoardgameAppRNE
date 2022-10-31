@@ -23,7 +23,7 @@ import {
 
 import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
 import PlaygroupMember from "./PlaygroupMember";
-// import ImagePicker from "react-native-image-crop-picker"; find out at a later point
+import * as ImagePicker from "expo-image-picker"; //https://docs.expo.dev/versions/latest/sdk/imagepicker/
 const theme = createTheme({});
 
 class AddPlaygroup extends React.Component {
@@ -108,9 +108,19 @@ class AddPlaygroup extends React.Component {
 
       playgroupsData["playgroups"]["groups"].push(playGroupObject);
       console.log(playgroupsData);
-      JSON.stringify({});
       // https://react-native-async-storage.github.io/async-storage/docs/install
     }
+  }
+
+  async pickImage() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
   }
 
   render() {
@@ -152,7 +162,7 @@ class AddPlaygroup extends React.Component {
                 minHeight: 41,
                 margin: 10,
               }}
-              onPress={() => this.props.navigation.navigate("Playgroups")}
+              onPress={this.pickImage.bind(this)}
               title="Add a group photo"
               titleStyle={{
                 fontWeight: "700",
