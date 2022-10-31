@@ -27,7 +27,10 @@ class Playgroups extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
-        <PageHeader navigation={this.props.navigation}></PageHeader>
+        <PageHeader
+          navigation={this.props.navigation}
+          activePage={1}
+        ></PageHeader>
 
         <TouchableWithoutFeedback
           style={{ flex: 1 }}

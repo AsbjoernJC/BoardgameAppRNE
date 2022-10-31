@@ -81,14 +81,6 @@ class Homepage extends React.Component {
     return 0;
   }
 
-  formatData = (data, numColumns) => {
-    const numberOfFullRows = Math.floor(data.length / numColumns);
-
-    let numberOfElementsLastRow = data.length % numColumns;
-
-    return data;
-  };
-
   renderItem = ({ item, index }) => {
     return (
       <View style={styles.boardgameCard}>
@@ -109,12 +101,13 @@ class Homepage extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
         <PageHeader
+          activePage={0}
           navigation={this.props.navigation}
           search={(input) => this.searchBoardgames(input)}
         ></PageHeader>
         <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
           <FlatList
-            data={this.formatData(this.state.boardgames, numColumns)}
+            data={this.state.boardgames}
             style={styles.container}
             renderItem={this.renderItem}
             numColumns={numColumns}
