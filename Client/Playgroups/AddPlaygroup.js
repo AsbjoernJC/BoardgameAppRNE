@@ -107,15 +107,15 @@ class AddPlaygroup extends React.Component {
     this.setState({ members: [""] });
   }
 
-  async pickImage() {
+  async pickGroupImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
-    console.log(result);
+    console.log(result.uri);
   }
 
   render() {
@@ -170,7 +170,7 @@ class AddPlaygroup extends React.Component {
                 minHeight: 41,
                 margin: 10,
               }}
-              onPress={this.pickImage.bind(this)}
+              onPress={this.pickGroupImage.bind(this)}
               title="Add a group photo"
               titleStyle={{
                 fontWeight: "700",

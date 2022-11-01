@@ -10,8 +10,7 @@ import {
   FlatList,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
-
-const numColumns = 2;
+import * as ImagePicker from "expo-image-picker"; //https://docs.expo.dev/versions/latest/sdk/imagepicker/
 
 class PlaygroupMember extends React.Component {
   constructor(props) {
@@ -36,6 +35,17 @@ class PlaygroupMember extends React.Component {
     );
   }
 
+  async addPicture() {
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      selectionLimit: 1,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result.uri);
+  }
+
   render() {
     return (
       <Input
@@ -51,6 +61,7 @@ class PlaygroupMember extends React.Component {
           name: "camera",
           color: "#242038",
           size: 36,
+          onPress: this.addPicture.bind(this),
         }}
         rightIcon={{
           marginRight: 0,
