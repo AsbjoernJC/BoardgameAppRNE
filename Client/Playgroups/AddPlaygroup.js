@@ -99,7 +99,25 @@ class AddPlaygroup extends React.Component {
 
       playgroupsData["playgroups"]["groups"].push(playGroupObject);
       console.log(playgroupsData);
+      // Storing string value
       // https://react-native-async-storage.github.io/async-storage/docs/install
+      //   const storeData = async (value) => {
+      //   try {
+      //     await AsyncStorage.setItem('@storage_Key', value)
+      //   } catch (e) {
+      //     // saving error
+      //   }
+      // }
+
+      // Storing object value
+      // const storeData = async (value) => {
+      //   try {
+      //     const jsonValue = JSON.stringify(value)
+      //     await AsyncStorage.setItem('@storage_Key', jsonValue)
+      //   } catch (e) {
+      //     // saving error
+      //   }
+      // }
     }
   }
 
