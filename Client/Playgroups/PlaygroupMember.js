@@ -37,7 +37,7 @@ class PlaygroupMember extends React.Component {
     );
   }
 
-  async addPicture() {
+  async addPictureCamera() {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       selectionLimit: 1,
@@ -46,7 +46,20 @@ class PlaygroupMember extends React.Component {
     });
 
     this.setState({
-      image: imageURI,
+      image: result.uri,
+    });
+  }
+
+  async addPictureLibrary() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    this.setState({
+      image: result.uri,
     });
   }
 
@@ -66,7 +79,7 @@ class PlaygroupMember extends React.Component {
             name: "camera",
             color: "#242038",
             size: 36,
-            onPress: this.addPicture.bind(this),
+            onPress: this.addPictureCamera.bind(this),
           }}
           rightIcon={{
             marginRight: 0,
@@ -74,7 +87,7 @@ class PlaygroupMember extends React.Component {
             name: "image",
             color: "#242038",
             size: 36,
-            onPress: this.getData.bind(this),
+            onPress: this.addPictureLibrary.bind(this),
           }}
         />
       </>
