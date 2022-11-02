@@ -25,6 +25,7 @@ import {
 import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
 import PlaygroupMember from "./PlaygroupMember";
 import * as ImagePicker from "expo-image-picker"; //https://docs.expo.dev/versions/latest/sdk/imagepicker/
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const theme = createTheme({});
 
 class AddPlaygroup extends React.Component {
@@ -99,35 +100,36 @@ class AddPlaygroup extends React.Component {
 
       playgroupsData["playgroups"]["groups"].push(playGroupObject);
       console.log(playgroupsData);
-      // Storing string value
-      // https://react-native-async-storage.github.io/async-storage/docs/install
-      //   const storeData = async (value) => {
-      //   try {
-      //     await AsyncStorage.setItem('@storage_Key', value)
-      //   } catch (e) {
-      //     // saving error
-      //   }
-      // }
-
-      // Storing object value
-      // const storeData = async (value) => {
-      //   try {
-      //     const jsonValue = JSON.stringify(value)
-      //     await AsyncStorage.setItem('@storage_Key', jsonValue)
-      //   } catch (e) {
-      //     // saving error
-      //   }
-      // }
-
-      // const getData = async () => {
-      //   try {
-      //     const jsonValue = await AsyncStorage.getItem('@storage_Key')
-      //     return jsonValue != null ? JSON.parse(jsonValue) : null;
-      //   } catch(e) {
-      //     // error reading value
-      //   }
-      // }
     }
+  }
+
+  // Storing object value
+  async storeData(value) {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("@storage_Key", jsonValue);
+      this.retrieveImage();
+    } catch (e) {
+      console.log(e);
+      // saving error
+    }
+  }
+
+  async getData() {
+    try {
+      const jsonValue = await AsyncStorage.getItem("@storage_Key");
+      console.log(JSON.parse(jsonValue));
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      // error reading value
+    }
+  }
+
+  async retrieveImage() {
+    let imageURI = await this.getData();
+    this.setState({
+      image: imageURI,
+    });
   }
 
   componentDidMount() {

@@ -8,9 +8,11 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   FlatList,
+  Image,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import * as ImagePicker from "expo-image-picker"; //https://docs.expo.dev/versions/latest/sdk/imagepicker/
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class PlaygroupMember extends React.Component {
   constructor(props) {
@@ -43,36 +45,50 @@ class PlaygroupMember extends React.Component {
       quality: 1,
     });
 
-    console.log(result.uri);
+    this.setState({
+      image: imageURI,
+    });
   }
 
   render() {
     return (
-      <Input
-        onChangeText={this.setPlayerName.bind(this)}
-        placeholderTextColor="#676174"
-        containerStyle={{}}
-        inputStyle={{ color: "#242038" }}
-        textAlign="center"
-        placeholder="Name a group member"
-        inputContainerStyle={{ borderBottomWidth: 0, alignItems: "center" }}
-        leftIcon={{
-          type: "font-awesome",
-          name: "camera",
-          color: "#242038",
-          size: 36,
-          onPress: this.addPicture.bind(this),
-        }}
-        rightIcon={{
-          marginRight: 0,
-          type: "font-awesome",
-          name: "image",
-          color: "#242038",
-          size: 36,
-        }}
-      />
+      <>
+        <Input
+          onChangeText={this.setPlayerName.bind(this)}
+          placeholderTextColor="#676174"
+          containerStyle={{}}
+          inputStyle={{ color: "#242038" }}
+          textAlign="center"
+          placeholder="Name a group member"
+          inputContainerStyle={{ borderBottomWidth: 0, alignItems: "center" }}
+          leftIcon={{
+            type: "font-awesome",
+            name: "camera",
+            color: "#242038",
+            size: 36,
+            onPress: this.addPicture.bind(this),
+          }}
+          rightIcon={{
+            marginRight: 0,
+            type: "font-awesome",
+            name: "image",
+            color: "#242038",
+            size: 36,
+            onPress: this.getData.bind(this),
+          }}
+        />
+      </>
     );
   }
 }
+
+// {
+//   this.state.image && (
+//     <Image
+//       source={{ uri: this.state.image }}
+//       style={{ width: 36, height: 36 }}
+//     />
+//   );
+// }
 
 export default PlaygroupMember;
