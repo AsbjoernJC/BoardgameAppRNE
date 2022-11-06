@@ -17,10 +17,6 @@ class Pageheader extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log(this.props?.search);
-  }
-
   render() {
     // Buttons should choose colour based on this.props.activePage 0 = boardgames, 1 playgroups, 2 ranking
     return (
