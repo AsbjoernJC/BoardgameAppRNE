@@ -80,6 +80,7 @@ class PlaygroupMember extends React.Component {
             color: "#242038",
             size: 36,
             onPress: this.addPictureCamera.bind(this),
+            marginRight: 0,
           }}
           rightIcon={{
             marginRight: 0,

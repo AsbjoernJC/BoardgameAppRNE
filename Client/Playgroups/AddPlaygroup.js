@@ -93,13 +93,14 @@ class AddPlaygroup extends React.Component {
     ) {
       filteredMembers.forEach(async (member) => {
         console.log(member);
+        console.log(member.props.index);
         await DB.transaction(async (tx) => {
-          console.log(tx);
           await tx.executeSql(
             "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
-            [member.name, member.index, member.image],
+            ["hello", 4, "asdasd"],
             () => {},
             (error) => {
+              console.log("Execute SQL was unsuccessfull");
               console.log(error);
             }
           );

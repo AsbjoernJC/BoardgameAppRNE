@@ -7,16 +7,19 @@ import { compareTwoStrings } from "../../node_modules/string-similarity/src/inde
 
 import * as SQLite from "expo-sqlite";
 // https://www.youtube.com/watch?v=wAyizHBFQEs&t=308s https://docs.expo.dev/versions/latest/sdk/sqlite/
-let DB = SQLite.openDatabase("db.db");
+let DB = SQLite.openDatabase("new.db");
 
-// DB.transaction((tx) => {
-//   tx.executeSql(
-//     "CREATE TABLE IF NOT EXISTS " +
-//       "Users " +
-//       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);",
-//     "?"
-//   );
-// });
+DB.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS " +
+      "Users " +
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);",
+    "?",
+    () => {
+      console.log("created users table");
+    }
+  );
+});
 
 // Playgroup TABLE
 DB.transaction((tx) => {
@@ -193,8 +196,46 @@ class Homepage extends React.Component {
     );
   };
 
+  async addMember() {
+    await DB.transaction(async (tx) => {
+      await tx.executeSql(
+        "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
+        ["hello", 4, "asdasd"],
+        () => {
+          console.log("added member");
+        },
+        (error) => {
+          console.log("Execute SQL was unsuccessfull");
+          console.log(error);
+        }
+      );
+    });
+  }
+
+  async createUser() {
+    let name = "Asbjørn";
+    let age = 22;
+    await DB.transaction(async (tx) => {
+      // await tx.executeSql(
+      //   "INSERT INTO Users (Name, Age) VALUES ('" + name + "', " + age + ")"
+      // );
+      await tx.executeSql(
+        "INSERT INTO Users (Name, Age) VALUES (?,?)",
+        [name, age],
+        () => {
+          console.log("added user");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+  }
+
   componentDidMount() {
     this.assignBoardgames();
+    this.createUser();
+    this.addMember();
   }
 
   render() {
