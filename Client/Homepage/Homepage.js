@@ -9,17 +9,68 @@ import * as SQLite from "expo-sqlite";
 // https://www.youtube.com/watch?v=wAyizHBFQEs&t=308s https://docs.expo.dev/versions/latest/sdk/sqlite/
 let DB = SQLite.openDatabase("db.db");
 
+// DB.transaction((tx) => {
+//   tx.executeSql(
+//     "CREATE TABLE IF NOT EXISTS " +
+//       "Users " +
+//       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);",
+//     "?"
+//   );
+// });
+
+// Playgroup TABLE
 DB.transaction((tx) => {
   tx.executeSql(
     "CREATE TABLE IF NOT EXISTS " +
-      "Users " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);",
-    "?",
-    () => {
-      console.log("created table");
-    }
+      "Playgroup " +
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Members TEXT);",
+    "?"
   );
 });
+
+// PlaygroupConnection TABLE
+DB.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS " +
+      "PlaygroupConnection " +
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlaygroupID INTEGER, MemberID INTEGER);",
+    "?"
+  );
+});
+
+// Member TABLE
+DB.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS " +
+      "Member " +
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Index INTEGER, Image TEXT);",
+    "?"
+  );
+});
+
+// MemberPlayConnection TABLE
+DB.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS " +
+      "MemberPlayConnection " +
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, MemberID INTEGER);",
+    "?"
+  );
+});
+
+// Play TABLE
+DB.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS " +
+      "Play " +
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Level INTEGER, Died INTEGER, Score INTEGER);",
+    "?"
+  );
+});
+
+// DB.transaction((tx) => {
+//   tx.executeSql("DROP TABLE Users");
+// });
 
 import {
   StyleSheet,
@@ -54,26 +105,6 @@ class Homepage extends React.Component {
     });
   }
 
-  async createUser() {
-    let name = "Asbjørn";
-    let age = 22;
-    await DB.transaction(async (tx) => {
-      // await tx.executeSql(
-      //   "INSERT INTO Users (Name, Age) VALUES ('" + name + "', " + age + ")"
-      // );
-      await tx.executeSql(
-        "INSERT INTO Users (Name, Age) VALUES (?,?)",
-        [name, age],
-        () => {
-          console.log();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    });
-  }
-
   async getUser() {
     DB.transaction(async (tx) => {
       tx.executeSql("SELECT Name, Age FROM Users", [], (tx, results) => {
@@ -83,7 +114,6 @@ class Homepage extends React.Component {
         if (len > 0) {
           var userName = results.rows.item(0).Name;
           var userAge = results.rows.item(0).Age;
-          console.log("No user was found");
           this.setState({
             dbString: userName,
           });
@@ -155,45 +185,7 @@ class Homepage extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#CAC4CE" }}>
-        {this.state.dbString !== "" ? (
-          <Text style={{ flex: 0.1, alignSelf: "center" }}>
-            {this.state.dbString}
-          </Text>
-        ) : (
-          <Text style={{ flex: 0.1, alignSelf: "center" }}>
-            Nothing from db
-          </Text>
-        )}
-        <Button
-          color={this.props.activePage === 1 ? "#D17B0F" : "#242038"}
-          buttonStyle={{
-            borderRadius: 8,
-            minHeight: 41,
-          }}
-          onPress={this.createUser.bind(this)}
-          title="Create user!"
-          titleStyle={{
-            fontWeight: "700",
-            fontSize: 17,
-            color: "#F7ECE1",
-          }}
-        />
-        <Button
-          color={this.props.activePage === 1 ? "#D17B0F" : "#242038"}
-          buttonStyle={{
-            borderRadius: 8,
-            minHeight: 41,
-          }}
-          onPress={this.getUser.bind(this)}
-          title="Get user!"
-          titleStyle={{
-            fontWeight: "700",
-            fontSize: 17,
-            color: "#F7ECE1",
-          }}
-        />
-
-        {/* <PageHeader
+        <PageHeader
           activePage={0}
           navigation={this.props.navigation}
           search={(input) => this.searchBoardgames(input)}
@@ -205,7 +197,7 @@ class Homepage extends React.Component {
             renderItem={this.renderItem}
             numColumns={numColumns}
           />
-        </View> */}
+        </View>
       </SafeAreaView>
     );
   }

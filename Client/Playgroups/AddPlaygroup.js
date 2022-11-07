@@ -26,7 +26,9 @@ import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
 import PlaygroupMember from "./PlaygroupMember";
 import * as ImagePicker from "expo-image-picker"; //https://docs.expo.dev/versions/latest/sdk/imagepicker/
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SQLite from "expo-sqlite";
 const theme = createTheme({});
+let DB = SQLite.openDatabase("db.db");
 
 class AddPlaygroup extends React.Component {
   constructor(props) {
@@ -89,17 +91,36 @@ class AddPlaygroup extends React.Component {
         return member.state.name === "";
       }).length === 0
     ) {
-      let playgroupsData = require("../JsonFiles/playgroups.json");
-      let playgroupId = playgroupsData.playgroups.numGroups;
+      filteredMembers.forEach(async (member) => {
+        await DB.transaction(async (tx) => {
+          console.log(tx);
+          await tx.executeSql(
+            "INSERT INTO Member (Name, Index, Image) VALUES (?,?,?)",
+            [member.name, member.index, member.image],
+            async () => {
+              await DB.transaction(async (tx) => {
+                await tx.executeSql(
+                  "SELECT last_insert_rowid()",
+                  [],
+                  (tx, results) => {
+                    console.log(results);
+                  }
+                );
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        });
+      });
 
-      let playGroupObject = {
-        id: playgroupId,
-        name: this.state.playgroupName,
-        members: filteredMembers,
-      };
-
-      playgroupsData["playgroups"]["groups"].push(playGroupObject);
-      console.log(playgroupsData);
+      // let playGroupObject = {
+      //   id: playgroupId,
+      //   name: this.state.playgroupName,
+      //   members: filteredMembers,
+      // };
+      //ADdplaygroup to sqlite db
     }
   }
 
@@ -148,6 +169,7 @@ class AddPlaygroup extends React.Component {
   }
 
   render() {
+    console.log("add playgroup");
     return (
       <KeyboardAvoidingView
         behavior="height"
