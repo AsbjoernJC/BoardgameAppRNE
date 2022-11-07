@@ -92,22 +92,13 @@ class AddPlaygroup extends React.Component {
       }).length === 0
     ) {
       filteredMembers.forEach(async (member) => {
+        console.log(member);
         await DB.transaction(async (tx) => {
           console.log(tx);
           await tx.executeSql(
-            "INSERT INTO Member (Name, Index, Image) VALUES (?,?,?)",
+            "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
             [member.name, member.index, member.image],
-            async () => {
-              await DB.transaction(async (tx) => {
-                await tx.executeSql(
-                  "SELECT last_insert_rowid()",
-                  [],
-                  (tx, results) => {
-                    console.log(results);
-                  }
-                );
-              });
-            },
+            () => {},
             (error) => {
               console.log(error);
             }

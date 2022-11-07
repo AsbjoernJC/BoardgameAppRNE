@@ -23,8 +23,11 @@ DB.transaction((tx) => {
   tx.executeSql(
     "CREATE TABLE IF NOT EXISTS " +
       "Playgroup " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Members TEXT);",
-    "?"
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT);",
+    "?",
+    () => {
+      console.log("created playgroup table ");
+    }
   );
 });
 
@@ -34,7 +37,10 @@ DB.transaction((tx) => {
     "CREATE TABLE IF NOT EXISTS " +
       "PlaygroupConnection " +
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlaygroupID INTEGER, MemberID INTEGER);",
-    "?"
+    "?",
+    () => {
+      console.log("created PlaygroupConnection table ");
+    }
   );
 });
 
@@ -43,8 +49,11 @@ DB.transaction((tx) => {
   tx.executeSql(
     "CREATE TABLE IF NOT EXISTS " +
       "Member " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Index INTEGER, Image TEXT);",
-    "?"
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, MIndex INTEGER, Image TEXT);",
+    "?",
+    () => {
+      console.log("created Member table ");
+    }
   );
 });
 
@@ -54,7 +63,10 @@ DB.transaction((tx) => {
     "CREATE TABLE IF NOT EXISTS " +
       "MemberPlayConnection " +
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, MemberID INTEGER);",
-    "?"
+    "?",
+    () => {
+      console.log("created MemberPlayConnection table ");
+    }
   );
 });
 
@@ -64,7 +76,10 @@ DB.transaction((tx) => {
     "CREATE TABLE IF NOT EXISTS " +
       "Play " +
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Level INTEGER, Died INTEGER, Score INTEGER);",
-    "?"
+    "?",
+    () => {
+      console.log("created Play table ");
+    }
   );
 });
 
