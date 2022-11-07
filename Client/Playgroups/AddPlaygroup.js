@@ -86,6 +86,7 @@ class AddPlaygroup extends React.Component {
       return member.hasOwnProperty("state");
     });
 
+    // Should also look through member.state.image === null;
     if (
       filteredMembers.filter((member) => {
         return member.state.name === "";
@@ -97,7 +98,7 @@ class AddPlaygroup extends React.Component {
         await DB.transaction(async (tx) => {
           await tx.executeSql(
             "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
-            ["hello", 4, "asdasd"],
+            [member.state.name, member.props.index, member.state.image],
             () => {},
             (error) => {
               console.log("Execute SQL was unsuccessfull");

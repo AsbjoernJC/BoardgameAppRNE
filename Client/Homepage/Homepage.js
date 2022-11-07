@@ -16,7 +16,7 @@ DB.transaction((tx) => {
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);",
     "?",
     () => {
-      console.log("created users table");
+      // console.log("created users table");
     }
   );
 });
@@ -29,7 +29,7 @@ DB.transaction((tx) => {
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT);",
     "?",
     () => {
-      console.log("created playgroup table ");
+      // console.log("created playgroup table ");
     }
   );
 });
@@ -42,7 +42,7 @@ DB.transaction((tx) => {
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlaygroupID INTEGER, MemberID INTEGER);",
     "?",
     () => {
-      console.log("created PlaygroupConnection table ");
+      // console.log("created PlaygroupConnection table ");
     }
   );
 });
@@ -55,7 +55,7 @@ DB.transaction((tx) => {
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, MIndex INTEGER, Image TEXT);",
     "?",
     () => {
-      console.log("created Member table ");
+      // console.log("created Member table ");
     }
   );
 });
@@ -68,7 +68,7 @@ DB.transaction((tx) => {
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, MemberID INTEGER);",
     "?",
     () => {
-      console.log("created MemberPlayConnection table ");
+      // console.log("created MemberPlayConnection table ");
     }
   );
 });
@@ -81,7 +81,7 @@ DB.transaction((tx) => {
       "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Level INTEGER, Died INTEGER, Score INTEGER);",
     "?",
     () => {
-      console.log("created Play table ");
+      // console.log("created Play table ");
     }
   );
 });
@@ -196,46 +196,8 @@ class Homepage extends React.Component {
     );
   };
 
-  async addMember() {
-    await DB.transaction(async (tx) => {
-      await tx.executeSql(
-        "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
-        ["hello", 4, "asdasd"],
-        () => {
-          console.log("added member");
-        },
-        (error) => {
-          console.log("Execute SQL was unsuccessfull");
-          console.log(error);
-        }
-      );
-    });
-  }
-
-  async createUser() {
-    let name = "Asbjørn";
-    let age = 22;
-    await DB.transaction(async (tx) => {
-      // await tx.executeSql(
-      //   "INSERT INTO Users (Name, Age) VALUES ('" + name + "', " + age + ")"
-      // );
-      await tx.executeSql(
-        "INSERT INTO Users (Name, Age) VALUES (?,?)",
-        [name, age],
-        () => {
-          console.log("added user");
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    });
-  }
-
   componentDidMount() {
     this.assignBoardgames();
-    this.createUser();
-    this.addMember();
   }
 
   render() {
