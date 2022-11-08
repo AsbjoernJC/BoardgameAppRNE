@@ -35,6 +35,7 @@ class AddPlaygroup extends React.Component {
     this.state = {
       members: [],
       playgroupName: "",
+      image: "",
     };
   }
 
@@ -109,6 +110,22 @@ class AddPlaygroup extends React.Component {
         });
       });
     }
+  }
+
+  async createPlaygroup() {
+    await DB.transaction(async (tx) => {
+      await tx.executeSql(
+        "INSERT INTO Playgroup (Name) VALUES (?)",
+        ["Bananklanen"],
+        () => {
+          console.log("Created Playgroup");
+        },
+        (error) => {
+          console.log("Execute SQL was unsuccessfull");
+          console.log(error);
+        }
+      );
+    });
   }
 
   // Storing object value

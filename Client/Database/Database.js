@@ -14,12 +14,12 @@ DB.transaction((tx) => {
   );
 });
 
-// Playgroup TABLE
+// Playgroup TABLE NEEDS TO BE DROPPED AND ADDED
 DB.transaction((tx) => {
   tx.executeSql(
     "CREATE TABLE IF NOT EXISTS " +
       "Playgroup " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT);",
+      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Image TEXT);",
     "?",
     () => {
       // console.log("created playgroup table ");

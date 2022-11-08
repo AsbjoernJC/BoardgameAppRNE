@@ -9,17 +9,17 @@ import {
   View,
   Dimensions,
   TouchableWithoutFeedback,
+  FlatList,
 } from "react-native";
 import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
 
-const numColumns = 2;
+const NUMCOLUMNS = 2;
 
 class Playgroups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inited: false,
-      navigation: [],
+      playgroups: [],
     };
   }
 
@@ -30,9 +30,14 @@ class Playgroups extends React.Component {
   fetchPlaygroups() {
     DB.transaction(async (tx) => {
       tx.executeSql("SELECT * FROM Playgroup", [], (tx, results) => {
-        this.setState({
-          playgroups: results,
-        });
+        this.setState(
+          {
+            playgroups: results.rows._array,
+          },
+          () => {
+            console.log(this.state.playgroups);
+          }
+        );
         console.log(results);
       });
     });
@@ -42,12 +47,20 @@ class Playgroups extends React.Component {
     this.fetchPlaygroups();
   }
 
+  renderItem = ({ item, index }) => {
+    return (
+      <View style={styles.playgroupCard}>
+        <PlaygroupCard name={item.Name} />
+      </View>
+    );
+  };
+
   render() {
     return (
       <View
         style={{ flex: 1, flexDirection: "column", backgroundColor: "#CAC4CE" }}
       >
-        <View style={{ flex: 0.12 }}>
+        <View style={{ flex: 0.14 }}>
           <PageheaderNoSearch
             navigation={this.props.navigation}
             activePage={1}
@@ -78,12 +91,47 @@ class Playgroups extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <View style={{ flex: 1 }}>
-          <PlaygroupCard name={"Bananbanden"} />
+        <View style={{ backgroundColor: "#CAC4CE", flex: 1 }}>
+          <FlatList
+            data={this.state.playgroups}
+            style={styles.container}
+            renderItem={this.renderItem}
+            numColumns={NUMCOLUMNS}
+          />
         </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  buttonGroup: {
+    flex: 1,
+    paddingTop: 10,
+    height: 50,
+    minHeight: 50,
+    backgroundColor: "#CAC4CE",
+  },
+  container: {
+    flex: 1,
+    marginVertical: 8,
+    backgroundColor: "#CAC4CE",
+  },
+  playgroupCard: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    margin: "6.5%",
+    height: Dimensions.get("window").width / NUMCOLUMNS, // approximate a square
+  },
+  itemInvisible: {
+    backgroundColor: "transparent",
+  },
+  itemText: {
+    color: "#F7ECE1",
+    fontWeight: "700",
+    fontSize: 17,
+  },
+});
 
 export default Playgroups;
