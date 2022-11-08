@@ -35,7 +35,8 @@ class AddPlaygroup extends React.Component {
     this.state = {
       members: [],
       playgroupName: "",
-      image: "",
+      image: null,
+      canCreateGroup: false,
     };
   }
 
@@ -73,10 +74,40 @@ class AddPlaygroup extends React.Component {
         console.log(new Date().toLocaleString());
       });
     }
+    this.createGroupCheck(updatedMembers);
+  }
+
+  createGroupCheck(members) {
+    console.log(members);
+    // Right now it can be called with a member without name. This shouldnt happen.
+    let canCreateGroup = true;
+    if (
+      this.state.image === null ||
+      this.state.playgroupName === "" ||
+      members === undefined
+    ) {
+      canCreateGroup = false;
+    }
+
+    for (let i = 0; i < members?.length; i++) {
+      if (members[i].state.name === "" || members[i].state.image === null) {
+        canCreateGroup = false;
+        break;
+      }
+    }
+
+    // Kunne evt. angive hvor der er fejl
+
+    console.log(`canCreateGroup = ${canCreateGroup}`);
+    this.setState({
+      canCreateGroup: canCreateGroup,
+    });
   }
 
   setPlaygroupName(input) {
-    this.setState({ playgroupName: input });
+    this.setState({ playgroupName: input }, () => {
+      this.createGroupCheck();
+    });
   }
 
   async createPlaygroup() {
@@ -86,8 +117,7 @@ class AddPlaygroup extends React.Component {
       return member.hasOwnProperty("state");
     });
 
-    // Should also look through member.state.image === null;
-    // Hvis en bruger med navn ikke har indsat billede, så skal der komme en lille pop up, der siger der var fejl
+    // Brug canCreateGroup
     if (
       filteredMembers.filter((member) => {
         return member.state.name === "" || member.state.image === null;
@@ -169,6 +199,9 @@ class AddPlaygroup extends React.Component {
       quality: 1,
     });
 
+    this.setState({ image: result.uri }, () => {
+      this.createGroupCheck();
+    });
     console.log(result.uri);
   }
 
@@ -200,6 +233,7 @@ class AddPlaygroup extends React.Component {
           {this.state.members.map((member, index) => {
             return (
               <PlaygroupMember
+                createGroupCheck={this.createGroupCheck.bind(this)}
                 index={index}
                 updateMemberList={this.updateMemberList.bind(this)}
               ></PlaygroupMember>
@@ -246,32 +280,61 @@ class AddPlaygroup extends React.Component {
               />
               Add a group photo
             </Button>
-            <Button
-              color="#242038"
-              buttonStyle={{
-                borderRadius: 20,
-                minHeight: 41,
-              }}
-              onPress={this.createPlaygroup.bind(this)}
-              title="Create playgroup"
-              titleStyle={{
-                fontWeight: "700",
-                fontSize: 17,
-                height: Dimensions.get("window").height * 0.05,
-                width: Dimensions.get("window").width * 0.5,
-                color: "#F7ECE1",
-                textAlignVertical: "center",
-              }}
-            >
-              <Icon
-                type="font-awesome"
-                name="users"
-                color="#F7ECE1"
-                size={30}
-                style={{ margin: 0 }}
-              />
-              Create playgroup
-            </Button>
+            {this.state.canCreateGroup ? (
+              <Button
+                color="#242038"
+                buttonStyle={{
+                  borderRadius: 20,
+                  minHeight: 41,
+                }}
+                onPress={this.createPlaygroup.bind(this)}
+                title="Create playgroup"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  height: Dimensions.get("window").height * 0.05,
+                  width: Dimensions.get("window").width * 0.5,
+                  color: "#F7ECE1",
+                  textAlignVertical: "center",
+                }}
+              >
+                <Icon
+                  type="font-awesome"
+                  name="users"
+                  color="#F7ECE1"
+                  size={30}
+                  style={{ margin: 0 }}
+                />
+                Create playgroup
+              </Button>
+            ) : (
+              <Button
+                color="#8d8b97"
+                buttonStyle={{
+                  borderRadius: 20,
+                  minHeight: 41,
+                }}
+                onPress={this.createPlaygroup.bind(this)}
+                title="Create playgroup"
+                titleStyle={{
+                  fontWeight: "700",
+                  fontSize: 17,
+                  height: Dimensions.get("window").height * 0.05,
+                  width: Dimensions.get("window").width * 0.5,
+                  color: "#d1ced3",
+                  textAlignVertical: "center",
+                }}
+              >
+                <Icon
+                  type="font-awesome"
+                  name="users"
+                  color="#d1ced3"
+                  size={30}
+                  style={{ margin: 0 }}
+                />
+                Create playgroup
+              </Button>
+            )}
           </View>
         </View>
       </KeyboardAvoidingView>
