@@ -4,91 +4,46 @@ import { Button, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { IMAGES } from "../StaticImages/images";
 import { compareTwoStrings } from "../../node_modules/string-similarity/src/index";
+import { DB } from "../Database/Database";
 
-import * as SQLite from "expo-sqlite";
-// https://www.youtube.com/watch?v=wAyizHBFQEs&t=308s https://docs.expo.dev/versions/latest/sdk/sqlite/
-let DB = SQLite.openDatabase("new.db");
-
-DB.transaction((tx) => {
-  tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS " +
-      "Users " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);",
-    "?",
-    () => {
-      // console.log("created users table");
-    }
-  );
+DB.transaction(async (tx) => {
+  tx.executeSql("SELECT * FROM Playgroup", [], (tx, results) => {
+    console.log("\nPlaygroup");
+    console.log(results);
+  });
 });
 
-// Playgroup TABLE
-DB.transaction((tx) => {
-  tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS " +
-      "Playgroup " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT);",
-    "?",
-    () => {
-      // console.log("created playgroup table ");
-    }
-  );
+DB.transaction(async (tx) => {
+  tx.executeSql("SELECT * FROM PlaygroupConnection", [], (tx, results) => {
+    console.log("\nPlaygroupConnect");
+    console.log(results);
+  });
 });
 
-// PlaygroupConnection TABLE
-DB.transaction((tx) => {
-  tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS " +
-      "PlaygroupConnection " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlaygroupID INTEGER, MemberID INTEGER);",
-    "?",
-    () => {
-      // console.log("created PlaygroupConnection table ");
-    }
-  );
+DB.transaction(async (tx) => {
+  tx.executeSql("SELECT * FROM MemberPlayConnection", [], (tx, results) => {
+    console.log("\nMemberPlayConnection");
+    console.log(results);
+  });
 });
 
-// Member TABLE
-DB.transaction((tx) => {
-  tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS " +
-      "Member " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, MIndex INTEGER, Image TEXT);",
-    "?",
-    () => {
-      // console.log("created Member table ");
-    }
-  );
+DB.transaction(async (tx) => {
+  tx.executeSql("SELECT * FROM Play", [], (tx, results) => {
+    console.log("\nPlay");
+    console.log(results);
+  });
 });
 
-// MemberPlayConnection TABLE
-DB.transaction((tx) => {
-  tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS " +
-      "MemberPlayConnection " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, MemberID INTEGER);",
-    "?",
-    () => {
-      // console.log("created MemberPlayConnection table ");
-    }
-  );
+DB.transaction(async (tx) => {
+  tx.executeSql("SELECT * FROM Member", [], (tx, results) => {
+    console.log("\nMember");
+    console.log(results);
+  });
 });
 
-// Play TABLE
 DB.transaction((tx) => {
-  tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS " +
-      "Play " +
-      "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Level INTEGER, Died INTEGER, Score INTEGER);",
-    "?",
-    () => {
-      // console.log("created Play table ");
-    }
-  );
+  tx.executeSql("DROP TABLE Users");
 });
-
-// DB.transaction((tx) => {
-//   tx.executeSql("DROP TABLE Users");
-// });
 
 import {
   StyleSheet,

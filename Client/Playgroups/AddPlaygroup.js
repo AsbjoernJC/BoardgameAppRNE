@@ -26,9 +26,8 @@ import PageheaderNoSearch from "../PageHeader/PageHeaderNoSearch";
 import PlaygroupMember from "./PlaygroupMember";
 import * as ImagePicker from "expo-image-picker"; //https://docs.expo.dev/versions/latest/sdk/imagepicker/
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SQLite from "expo-sqlite";
 const theme = createTheme({});
-let DB = SQLite.openDatabase("db.db");
+import { DB } from "../Database/Database";
 
 class AddPlaygroup extends React.Component {
   constructor(props) {
@@ -79,11 +78,29 @@ class AddPlaygroup extends React.Component {
     this.setState({ playgroupName: input });
   }
 
-  createPlaygroup() {
+  async createPlaygroup() {
     if (this.state.playgroupName === "") return;
 
     let filteredMembers = this.state.members.filter((member) => {
       return member.hasOwnProperty("state");
+    });
+
+    await DB.transaction(async (tx) => {
+      await tx.executeSql(
+        "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
+        ["Asserbadjoern", 0, "asdasd"],
+        () => {
+          DB.transaction(async (tx) => {
+            tx.executeSql("SELECT * FROM Member", [], (tx, results) => {
+              console.log(results);
+            });
+          });
+        },
+        (error) => {
+          console.log("Execute SQL was unsuccessfull");
+          console.log(error);
+        }
+      );
     });
 
     // Should also look through member.state.image === null;
@@ -93,27 +110,10 @@ class AddPlaygroup extends React.Component {
       }).length === 0
     ) {
       filteredMembers.forEach(async (member) => {
-        console.log(member);
-        console.log(member.props.index);
-        await DB.transaction(async (tx) => {
-          await tx.executeSql(
-            "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
-            [member.state.name, member.props.index, member.state.image],
-            () => {},
-            (error) => {
-              console.log("Execute SQL was unsuccessfull");
-              console.log(error);
-            }
-          );
-        });
+        let Name = member.state.name;
+        let MIndex = member.props.index;
+        let Image = member.state.image;
       });
-
-      // let playGroupObject = {
-      //   id: playgroupId,
-      //   name: this.state.playgroupName,
-      //   members: filteredMembers,
-      // };
-      //ADdplaygroup to sqlite db
     }
   }
 

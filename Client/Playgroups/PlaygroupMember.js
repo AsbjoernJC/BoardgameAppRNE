@@ -45,6 +45,7 @@ class PlaygroupMember extends React.Component {
       quality: 1,
     });
 
+    console.log(result.uri);
     this.setState({
       image: result.uri,
     });
