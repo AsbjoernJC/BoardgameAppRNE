@@ -50,13 +50,13 @@ class Playgroups extends React.Component {
   renderItem = ({ item, index }) => {
     return (
       <View style={styles.playgroupCard}>
-        <PlaygroupCard name={item.Name} />
+        <PlaygroupCard name={item.Name} source={item.image} />
       </View>
     );
   };
 
   render() {
-    return (
+    return this.state.playgroups.length > 0 ? (
       <View
         style={{ flex: 1, flexDirection: "column", backgroundColor: "#CAC4CE" }}
       >
@@ -98,6 +98,42 @@ class Playgroups extends React.Component {
             renderItem={this.renderItem}
             numColumns={NUMCOLUMNS}
           />
+        </View>
+      </View>
+    ) : (
+      <View
+        style={{ flex: 1, flexDirection: "column", backgroundColor: "#CAC4CE" }}
+      >
+        <View style={{ flex: 0.8 }}>
+          <PageheaderNoSearch
+            navigation={this.props.navigation}
+            activePage={1}
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <TouchableWithoutFeedback onPress={this.doMoreStuff.bind(this)}>
+            <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: "column" }}>
+                <Icon
+                  name="plus"
+                  type="font-awesome"
+                  iconProps={{ size: 56 }}
+                  color="#242038"
+                  iconStyle={{}}
+                  style={{}}
+                />
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    fontSize: 30,
+                    color: "#242038",
+                  }}
+                >
+                  Add a<Text style={{ fontWeight: "700" }}> playgroup</Text>
+                </Text>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );

@@ -14,6 +14,7 @@ class App extends React.Component {
     return (
       <>
         {/* https://www.youtube.com/watch?v=lM0g5aR_aDo */}
+        {/* https://reactnavigation.org/docs/headers/ Making it not ugly */}
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen key={1} name="Homepage">
