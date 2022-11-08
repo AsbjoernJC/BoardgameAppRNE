@@ -85,34 +85,28 @@ class AddPlaygroup extends React.Component {
       return member.hasOwnProperty("state");
     });
 
-    await DB.transaction(async (tx) => {
-      await tx.executeSql(
-        "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
-        ["Asserbadjoern", 0, "asdasd"],
-        () => {
-          DB.transaction(async (tx) => {
-            tx.executeSql("SELECT * FROM Member", [], (tx, results) => {
-              console.log(results);
-            });
-          });
-        },
-        (error) => {
-          console.log("Execute SQL was unsuccessfull");
-          console.log(error);
-        }
-      );
-    });
-
     // Should also look through member.state.image === null;
+    // Hvis en bruger med navn ikke har indsat billede, så skal der komme en lille pop up, der siger der var fejl
     if (
       filteredMembers.filter((member) => {
-        return member.state.name === "";
+        return member.state.name === "" || member.state.image === null;
       }).length === 0
     ) {
       filteredMembers.forEach(async (member) => {
-        let Name = member.state.name;
-        let MIndex = member.props.index;
-        let Image = member.state.image;
+        await DB.transaction(async (tx) => {
+          await tx.executeSql(
+            "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
+            [member.state.name, member.props.index, member.state.image],
+            () => {
+              console.log("Created member");
+              console.log(member);
+            },
+            (error) => {
+              console.log("Execute SQL was unsuccessfull");
+              console.log(error);
+            }
+          );
+        });
       });
     }
   }
