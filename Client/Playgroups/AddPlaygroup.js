@@ -79,7 +79,7 @@ class AddPlaygroup extends React.Component {
 
   createGroupCheck(members) {
     console.log(members);
-    // Right now it can be called with a member without name. This shouldnt happen.
+    // Right now it can be called with a "" member . This shouldnt happen.
     let canCreateGroup = true;
     if (
       this.state.image === null ||

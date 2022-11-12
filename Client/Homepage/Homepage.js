@@ -4,46 +4,11 @@ import { Button, Input } from "@rneui/themed";
 import { boardgames as BOARDGAMES } from "../JsonFiles/boardgames.json";
 import { IMAGES } from "../StaticImages/images";
 import { compareTwoStrings } from "../../node_modules/string-similarity/src/index";
-import { DB } from "../Database/Database";
-
-DB.transaction(async (tx) => {
-  tx.executeSql("SELECT * FROM Playgroup", [], (tx, results) => {
-    console.log("\nPlaygroup");
-    console.log(results);
-  });
-});
-
-DB.transaction(async (tx) => {
-  tx.executeSql("SELECT * FROM PlaygroupConnection", [], (tx, results) => {
-    console.log("\nPlaygroupConnect");
-    console.log(results);
-  });
-});
-
-DB.transaction(async (tx) => {
-  tx.executeSql("SELECT * FROM MemberPlayConnection", [], (tx, results) => {
-    console.log("\nMemberPlayConnection");
-    console.log(results);
-  });
-});
-
-DB.transaction(async (tx) => {
-  tx.executeSql("SELECT * FROM Play", [], (tx, results) => {
-    console.log("\nPlay");
-    console.log(results);
-  });
-});
-
-DB.transaction(async (tx) => {
-  tx.executeSql("SELECT * FROM Member", [], (tx, results) => {
-    console.log("\nMember");
-    console.log(results);
-  });
-});
-
-DB.transaction((tx) => {
-  tx.executeSql("DROP TABLE Users");
-});
+import {
+  DB,
+  PrintAllTableHeaders,
+  PrintAllTablesContent,
+} from "../Database/Database";
 
 import {
   StyleSheet,
@@ -139,6 +104,11 @@ class Homepage extends React.Component {
     return 0;
   }
 
+  async printDatabaseContent() {
+    await PrintAllTableHeaders();
+    await PrintAllTablesContent();
+  }
+
   renderItem = ({ item, index }) => {
     return (
       <View style={styles.boardgameCard}>
@@ -153,6 +123,7 @@ class Homepage extends React.Component {
 
   componentDidMount() {
     this.assignBoardgames();
+    this.printDatabaseContent();
   }
 
   render() {

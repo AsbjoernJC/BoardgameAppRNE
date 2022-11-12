@@ -16,12 +16,11 @@ class PlaygroupCard extends React.Component {
 
     this.state = {
       image: null,
-      playgroups: null,
     };
   }
 
   doStuff() {
-    console.log("pressed on a Playgroup card");
+    console.log(this.image);
   }
 
   render() {
