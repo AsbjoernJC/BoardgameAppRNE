@@ -70,9 +70,10 @@ class Homepage extends React.Component {
     let sortedBoardgames = [];
 
     sortedBoardgames = this.stringBoardgameSearch(input, allBoardgames);
-    // unsortedBoardgames.sort((firstBoardgame, secondBoardgame) =>
-    // this.compareBoardgames(firstBoardgame, secondBoardgame, input)
-    // );
+    sortedBoardgames.sort((firstBoardgame, secondBoardgame) =>
+      this.compareBoardgames(firstBoardgame, secondBoardgame, input)
+    );
+
     this.setState({
       boardgames: sortedBoardgames,
     });
@@ -94,11 +95,28 @@ class Homepage extends React.Component {
   compareBoardgames(firstBoardgame, secondBoardgame, input) {
     let firstSimilarity = compareTwoStrings(firstBoardgame, input);
     let secondSimilarity = compareTwoStrings(secondBoardgame, input);
+    let firstPartSimilarity = compareTwoStrings(
+      firstBoardgame.split("-")[0],
+      input
+    );
+    let secondPartSimilarity = compareTwoStrings(
+      secondBoardgame.split("-")[0],
+      input
+    );
 
-    if (firstSimilarity < secondSimilarity) {
+    firstSimilarity =
+      firstPartSimilarity > firstSimilarity
+        ? firstPartSimilarity
+        : firstSimilarity;
+    secondSimilarity =
+      secondPartSimilarity > secondSimilarity
+        ? secondPartSimilarity
+        : secondSimilarity;
+
+    if (firstSimilarity > secondSimilarity) {
       return -1;
     }
-    if (firstSimilarity > secondSimilarity) {
+    if (firstSimilarity < secondSimilarity) {
       return 1;
     }
     return 0;

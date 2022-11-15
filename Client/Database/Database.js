@@ -1,28 +1,202 @@
 import * as SQLite from "expo-sqlite";
 // https://www.youtube.com/watch?v=wAyizHBFQEs&t=308s https://docs.expo.dev/versions/latest/sdk/sqlite/
 export const DB = SQLite.openDatabase("new1.db");
+// https://docs.expo.dev/versions/latest/sdk/sqlite/
+// https://docs.expo.dev/versions/latest/sdk/sqlite/#websqldatabase
+// https://docs.expo.dev/versions/latest/sdk/sqlite/#database
+DB.exec([{ sql: "PRAGMA foreign_keys = 1;", args: [] }], false, () =>
+  console.log("Foreign keys turned on")
+);
+
+DB.exec([{ sql: "PRAGMA foreign_keys;", args: [] }], false, (response) =>
+  console.log(response)
+);
+
 const TABLES = [
   "Playgroup",
   "PlaygroupConnection",
   "Member",
   "MemberPlayConnection",
   "Play",
-  "MemberPlayConnectionTest",
-  "ConnectionTest",
-  "TestParent",
-  "TestSecondParent",
+];
+
+const MOCKEDMEMBERS = [
+  {
+    ID: 1,
+    Name: "Johannes",
+    MIndex: 4,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 2,
+    Name: "Jonas",
+    MIndex: 4,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 3,
+    Name: "Emil",
+    MIndex: 4,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 4,
+    Name: "Anders",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 5,
+    Name: "Rasmus",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 6,
+    Name: "Thorbjørn",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 7,
+    Name: "Xaniah",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 8,
+    Name: "xXxTheOrdBjørnxXx",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 9,
+    Name: "Emulio",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 10,
+    Name: "SurferJones",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 11,
+    Name: "Boner",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 12,
+    Name: "ToftLife",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 13,
+    Name: "Jojokp",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+  {
+    ID: 14,
+    Name: "Anden",
+    MIndex: 0,
+    Image:
+      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
+  },
+];
+
+const MOCKEDPLAYS = [
+  {
+    PlayID: 0,
+    Level: 0,
+    Died: 0,
+    Score: 45,
+    Game: "Gloomhaven",
+  },
+  {
+    PlayID: 0,
+    Level: 0,
+    Died: 0,
+    Score: 30,
+    Game: "Gloomhaven",
+  },
+  {
+    PlayID: 0,
+    Level: 0,
+    Died: 0,
+    Score: 41,
+    Game: "Gloomhaven",
+  },
+  {
+    PlayID: 0,
+    Level: 0,
+    Died: 0,
+    Score: 50,
+    Game: "Gloomhaven",
+  },
+  {
+    PlayID: 0,
+    Level: 0,
+    Died: 0,
+    Score: 51,
+    Game: "Gloomhaven",
+  },
+  {
+    PlayID: 0,
+    Level: 0,
+    Died: 0,
+    Score: 53,
+    Game: "Gloomhaven",
+  },
+];
+
+const MOCKEDPLAYCONNECTIONS = [
+  {
+    PlayID: 0,
+    MemberID: 1,
+  },
+  {
+    PlayID: 0,
+    MemberID: 2,
+  },
+  {
+    PlayID: 0,
+    MemberID: 3,
+  },
+  {
+    PlayID: 0,
+    MemberID: 4,
+  },
+  {
+    PlayID: 0,
+    MemberID: 5,
+  },
+  {
+    PlayID: 0,
+    MemberID: 6,
+  },
 ];
 
 initDatabase();
 
+// https://www.w3.org/TR/webdatabase/
 async function initDatabase() {
-  await DB.transaction(async (tx) => {
-    tx.executeSql("PRAGMA foreign_keys = ON", [], (tx, results) => {
-      console.log("Foreign_keys = on");
-    });
-  });
-
-  // Playgroup TABLE NEEDS TO BE DROPPED AND ADDED AS IT CURRENTLY DOES NOT CONTAIN Image.
   await DB.transaction((tx) => {
     tx.executeSql(
       "CREATE TABLE IF NOT EXISTS " +
@@ -61,25 +235,12 @@ async function initDatabase() {
     );
   });
 
-  // MemberPlayConnection TABLE
-  await DB.transaction((tx) => {
-    tx.executeSql(
-      "CREATE TABLE IF NOT EXISTS " +
-        "MemberPlayConnection " +
-        "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, MemberID INTEGER);",
-      "?",
-      () => {
-        // console.log("created MemberPlayConnection table ");
-      }
-    );
-  });
-
   // Play TABLE
   await DB.transaction((tx) => {
     tx.executeSql(
       "CREATE TABLE IF NOT EXISTS " +
         "Play " +
-        "(PlayID INTEGER PRIMARY KEY AUTOINCREMENT, Level INTEGER, Died INTEGER, Score INTEGER);",
+        "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, Level INTEGER, Died INTEGER, Score INTEGER, Boardgame TEXT);",
       "?",
       () => {
         // console.log("created Play table ");
@@ -91,63 +252,10 @@ async function initDatabase() {
   await DB.transaction((tx) => {
     tx.executeSql(
       "CREATE TABLE IF NOT EXISTS " +
-        "MemberPlayConnectionTest " +
-        "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER REFERENCES 'Play'('PlayID'), MemberID INTEGER REFERENCES 'Member'('MemberID'));",
+        "MemberPlayConnection " +
+        "(ID INTEGER PRIMARY KEY AUTOINCREMENT, PlayID INTEGER, MemberID INTEGER);",
       "?",
-      () => {
-        // console.log("created MemberPlayConnection table ");
-      }
-    );
-  });
-
-  // MemberPlayConnectionTest TABLE
-  await DB.transaction((tx) => {
-    tx.executeSql(
-      "CREATE TABLE IF NOT EXISTS " +
-        "ConnectionTest " +
-        "(FOREIGN KEY('TestParentID') REFERENCES 'TestParent'('TestParentID'), FOREIGN KEY('TestSecondParent' REFERENCES 'TestSecondParent'('TestSecondParentID'));",
-      "?",
-      () => {
-        // console.log("created MemberPlayConnection table ");
-      }
-    );
-  });
-
-  // MemberPlayConnectionTest TABLE
-  await DB.transaction((tx) => {
-    tx.executeSql(
-      "CREATE TABLE IF NOT EXISTS " +
-        "TestParent " +
-        "(ID INTEGER PRIMARY KEY AUTOINCREMENT);",
-      "?",
-      () => {
-        // console.log("created MemberPlayConnection table ");
-      }
-    );
-  });
-
-  await DB.transaction((tx) => {
-    tx.executeSql(
-      "CREATE TABLE IF NOT EXISTS " +
-        "TestSecondParent " +
-        "(ID INTEGER PRIMARY KEY AUTOINCREMENT);",
-      "?",
-      () => {
-        // console.log("created MemberPlayConnection table ");
-      }
-    );
-  });
-
-  // MemberPlayConnectionTest TABLE
-  await DB.transaction((tx) => {
-    tx.executeSql(
-      "CREATE TABLE IF NOT EXISTS " +
-        "ConnectionTest " +
-        "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TestParentID INTEGER REFERENCES 'TestParent'('TestParentID'), TestSecondParentID INTEGER REFERENCES 'TestSecondParentID'('TestSecondParentID'));",
-      "?",
-      () => {
-        // console.log("created MemberPlayConnection table ");
-      }
+      () => {}
     );
   });
 }
@@ -183,19 +291,6 @@ export async function DropTable(tableName) {
   });
 }
 
-export async function PrintTableHeaders(tableName) {
-  DB.transaction(async (tx) => {
-    tx.executeSql(
-      "PRAGMA table_info(MemberPlayConnectionTest)",
-      [],
-      (tx, results) => {
-        console.log("\nMemberPlayConnectionTest Headers");
-        console.log(results);
-      }
-    );
-  });
-}
-
 export async function PrintAllTableHeaders() {
   for (let i = 0; i < TABLES.length; i++) {
     await DB.transaction(async (tx) => {
@@ -222,6 +317,67 @@ export async function PrintAllTablesContent() {
   }
 }
 
+export async function SaveMembersToDatabase() {
+  MOCKEDMEMBERS.forEach(async (member) => {
+    await DB.transaction(async (tx) => {
+      await tx.executeSql(
+        "INSERT INTO Member (Name, MIndex, Image) VALUES (?,?,?)",
+        [member.Name, member.MIndex, member.Image],
+        () => {
+          console.log("Created member");
+          console.log(member);
+        },
+        (error) => {
+          console.log("Execute SQL was unsuccessfull");
+          console.log(error);
+        }
+      );
+    });
+  });
+}
+
+export async function SavePlaysToDatabase() {
+  MOCKEDPLAYS.forEach(async (play) => {
+    console.log(play);
+    await DB.transaction(async (tx) => {
+      await tx.executeSql(
+        "INSERT INTO Play (PlayID, Level, Died, Score, Boardgame) VALUES (?,?,?,?,?)",
+        [play.PlayID, play.Level, play.Died, play.Score, play.Game],
+        () => {
+          console.log("Created play");
+          console.log(play);
+        },
+        (error) => {
+          console.log("Execute SQL was unsuccessfull");
+          console.log(error);
+        }
+      );
+    });
+  });
+}
+
+export async function SavePlayConnectionsToDatabase() {
+  MOCKEDPLAYCONNECTIONS.forEach(async (connection) => {
+    console.log(connection);
+    await DB.transaction(async (tx) => {
+      await tx.executeSql(
+        "INSERT INTO MemberPlayConnection (PlayID, MemberID) VALUES (?,?)",
+        [connection.PlayID, connection.MemberID],
+        () => {
+          console.log("Created MemberPlayConenction");
+          console.log(connection);
+        },
+        (error) => {
+          console.log("Execute SQL was unsuccessfull");
+          console.log(error);
+        }
+      );
+    });
+  });
+}
+
+export async function QueryMemberPlayConnections(searchParameter) {}
+
 export default DB;
 
 let tablesToDrop = [
@@ -229,93 +385,13 @@ let tablesToDrop = [
   "PlaygroupConnection",
   "Member",
   "Play",
+  "ConnectionTest",
 ];
-// DropMultipleTables(tablesToDrop);
 
-let deletedMembers = [
-  {
-    ID: 1,
-    Name: "hello",
-    MIndex: 4,
-    Image: "asdasd",
-  },
-  {
-    ID: 2,
-    Name: "hello",
-    MIndex: 4,
-    Image: "asdasd",
-  },
-  {
-    ID: 3,
-    Name: "hello",
-    MIndex: 4,
-    Image: "asdasd",
-  },
-  {
-    ID: 4,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 5,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 6,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 7,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 8,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 9,
-    Name: "Asserbadjoern",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 10,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 11,
-    Name: "Asbjørn",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 12,
-    Name: "Asserbadjoern",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 13,
-    Name: "Asserbadjoern",
-    MIndex: 0,
-    Image: "asdasd",
-  },
-  {
-    ID: 14,
-    Name: "asdfsdf",
-    MIndex: 0,
-    Image:
-      "file:///data/user/0/host.exp.exponent/cache/ImagePicker/497f37bf-b044-465c-a756-8b9a607b8275.jpeg",
-  },
-];
+// RESET TABLES
+// DropMultipleTables(TABLES);
+
+// SAVE MOCKED DATA
+// SaveMembersToDatabase();
+// SavePlaysToDatabase();
+// SavePlayConnectionsToDatabase();
